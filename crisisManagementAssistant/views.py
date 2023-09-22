@@ -11,19 +11,22 @@ def home_page(request):
         #form = CMDocForm(request.POST, request.FILES)
         form = CMDocForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit = False)
+            obj.user=request.user
+            obj.save()
             return redirect('home_page')
     else:
         form = CMDocForm()
     files = CMDoc.objects.all()
-    return render(request, 'CMA/home.html', {'form': form, 'files': files})
+    return render(request, 'cma/home.html', {'form': form, 'files': files})
 
 @login_required
 def view_file(request, slug=None):
     cmdoc_obj = None
     if slug is not None:
         cmdoc_obj = CMDoc.objects.get(slug=slug)
-    return render(request, 'CMA/view_CMDoc.html', {'CMDoc': cmdoc_obj})
+    return render(request, 'cma/view_CMDoc.html', {'CMDoc': cmdoc_obj})
+
 """
 def download_file(request, file_id):
     uploaded_file = CMDoc.objects.get(pk=file_id)

@@ -13,13 +13,13 @@ def login_view(request):
     else:
         form = AuthenticationForm(request)
     context = {"form":form}
-    return render(request, "authentication/login.html", context)
+    return render(request, "auth/login.html", context)
 
 def logout_view(request):
     if request.method == "POST":
         logout(request)
         return redirect("/auth/login")
-    return render(request, "authentication/logout.html")
+    return render(request, "auth/logout.html")
 
 def register_view(request):
     form = UserCreationForm(request.POST or None)
@@ -27,4 +27,4 @@ def register_view(request):
         user_obj = form.save()
         return redirect('/auth/login')
     context = {"form": form}
-    return render(request, "authentication/register.html", context)
+    return render(request, "auth/register.html", context)

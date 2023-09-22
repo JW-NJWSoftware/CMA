@@ -5,15 +5,13 @@ from django.contrib import admin
 from django.utils.text import slugify
 from ResilienceAI.utils import unique_slugify
 
-User = settings.AUTH_USER_MODEL
-
 class CMDoc(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     fileName = models.CharField(default="", max_length=120)
     desc = models.TextField(default="")
     slug = models.SlugField(max_length=50, blank=True, null=True)
     #file = models.FileField(upload_to='uploads/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('id',)
