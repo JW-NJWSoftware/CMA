@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def home_page(request):
     if request.method == 'POST':
-        form = CMDocForm(request.POST, request.FILES)
+        #form = CMDocForm(request.POST, request.FILES)
+        form = CMDocForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('home_page')
@@ -17,9 +18,16 @@ def home_page(request):
     files = CMDoc.objects.all()
     return render(request, 'CMA/home.html', {'form': form, 'files': files})
 
-
+@login_required
+def view_file(request, slug=None):
+    cmdoc_obj = None
+    if slug is not None:
+        cmdoc_obj = CMDoc.objects.get(slug=slug)
+    return render(request, 'CMA/view_CMDoc.html', {'CMDoc': cmdoc_obj})
+"""
 def download_file(request, file_id):
     uploaded_file = CMDoc.objects.get(pk=file_id)
     response = HttpResponse(uploaded_file.fileName, uploaded_file.file, content_type='application/force-download')
     response['Content-Disposition'] = f'attachment; filename="{uploaded_file.fileName}"'
     return response
+"""
