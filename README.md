@@ -41,7 +41,7 @@
     <br />
     
     <a href="https://github.com/JW-NJWSoftware/CMA/issues">Report Bug</a>
-    |
+    .
     <a href="https://github.com/JW-NJWSoftware/CMA/issues">Request Feature</a>
   </p>
 </div>
