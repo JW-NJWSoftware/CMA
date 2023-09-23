@@ -50,7 +50,7 @@ Project detail and documentation
 
 ### Built With
 
-<table style="border: 1px solid transparent">
+<table style="border-color: transparent">
 <tr>
 <td>
   
