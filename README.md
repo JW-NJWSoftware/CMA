@@ -30,17 +30,18 @@
     <img src="crisisManagementAssistant/static/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Crisis Management Assistant</h3>
-
+  <a href="https://cma.resilienceai.co.uk/">
+    <h3 align="center">Crisis Management Assistant</h3>
+  </a>
   <p align="center">
-    CMA is a cloud based solution to support organisations crisis disciplines. Using bespoke AI models created by Crisis and Resilience experts, CMA can provide organisations a level of crisis competence previously impossible without dedicated training, staff and third party support.
+    CMA is a cloud based solution to support organisations crisis disciplines. Using bespoke AI models created by Crisis and Resilience experts, the web application can provide organisations a level of crisis competence previously impossible without dedicated training, staff and third party support.
     <br />
     <a href="https://github.com/JW-NJWSoftware/CMA"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    ·
+    
     <a href="https://github.com/JW-NJWSoftware/CMA/issues">Report Bug</a>
-    ·
+    |
     <a href="https://github.com/JW-NJWSoftware/CMA/issues">Request Feature</a>
   </p>
 </div>
