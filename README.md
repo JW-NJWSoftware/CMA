@@ -42,9 +42,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://cma.resilienceai.co.uk/)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `jakepwheeler`, `email_client`, `email`, `Crisis Management Assistant`, `CMA is a cloud based solution to crisis disciplines at organisations who need expert AI support.`
+Project detail and documentation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
