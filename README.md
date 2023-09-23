@@ -132,9 +132,9 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - jakephilipwheeler@gmail.com
+Jake Wheeler - jakephilipwheeler@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/JW-NJWSoftware/CMA](https://github.com/JW-NJWSoftware/CMA)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
