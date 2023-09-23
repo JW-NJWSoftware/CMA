@@ -53,31 +53,45 @@ Project detail and documentation
 <table>
 <tr>
 <td>
+  
 * [![Python][Python.com]][Python-url]
+  
 </td>
 <td>
+  
 * [![DigitalOcean][DigitalOcean.com]][DigitalOcean-url]
+  
 </td>
 </tr>
 <tr>
 <td>
+  
 * [![Django][Django.com]][Django-url]
+  
 </td>
 <td>
+  
 * [![AWS][AWS.com]][AWS-url]
+  
 </td>
 </tr>
 <tr>
 <td>
+  
 * [![PostgreSQL][PostgreSQL.com]][PostgreSQL-url]
+  
 </td>
 <td>
+  
 * [![JQuery][JQuery.com]][JQuery-url]
+  
 </td>
 </tr>
 <tr>
 <td>
+  
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+  
 </td>
 <td>
 </td>
