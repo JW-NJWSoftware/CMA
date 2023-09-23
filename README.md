@@ -39,7 +39,7 @@
     <a href="https://github.com/JW-NJWSoftware/CMA"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    
+    .
     <a href="https://github.com/JW-NJWSoftware/CMA/issues">Report Bug</a>
     .
     <a href="https://github.com/JW-NJWSoftware/CMA/issues">Request Feature</a>
