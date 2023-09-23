@@ -52,9 +52,9 @@ Project detail and documentation
 * [![Python][Python.com]][Python-url]
 * [![Django][Django.com]][Django-url]
 * [![PostgreSQL][PostgreSQL.com]][PostgreSQL-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![DigitalOcean][DigitalOcean.com]][DigitalOcean-url]
 * [![AWS][AWS.com]][AWS-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
