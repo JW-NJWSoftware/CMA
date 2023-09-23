@@ -81,7 +81,7 @@ Project Link: [https://github.com/JW-NJWSoftware/CMA](https://github.com/JW-NJWS
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/JW-NJWSoftware/CMA.svg?style=for-the-badge
 [issues-url]: https://github.com/github_username/repo_name/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jakepwheeler
