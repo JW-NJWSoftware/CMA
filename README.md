@@ -51,6 +51,7 @@ Project detail and documentation
 ### Built With
 * [![Python][Python.com]][Python-url]
 * [![Django][Django.com]][Django-url]
+* [![PostgreSQL][PostgreSQL.com]][PostgreSQL-url]
 * [![DigitalOcean][DigitalOcean.com]][DigitalOcean-url]
 * [![AWS][AWS.com]][AWS-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
@@ -86,13 +87,15 @@ Project Link: [https://github.com/JW-NJWSoftware/CMA](https://github.com/JW-NJWS
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jakepwheeler
 [product-screenshot]: images/screenshot.png
-[Python.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Python.com]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org
-[Django.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Django.com]: https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white
 [Django-url]: https://www.djangoproject.com
-[DigitalOcean.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[PostgreSQL.com]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
+[PostgreSQL-url]: https://www.postgresql.org
+[DigitalOcean.com]: https://img.shields.io/badge/Digital_Ocean-0080FF?style=for-the-badge&logo=DigitalOcean&logoColor=white
 [DigitalOcean-url]: https://www.digitalocean.com/
-[AWS.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[AWS.com]: https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white
 [AWS-url]: https://aws.amazon.com
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
