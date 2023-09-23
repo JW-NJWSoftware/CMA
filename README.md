@@ -49,7 +49,10 @@ Project detail and documentation
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
-
+* [![Python][Python.com]][Python-url]
+* [![Django][Django.com]][Django-url]
+* [![DigitalOcean][DigitalOcean.com]][DigitalOcean-url]
+* [![AWS][AWS.com]][AWS-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
@@ -83,6 +86,14 @@ Project Link: [https://github.com/JW-NJWSoftware/CMA](https://github.com/JW-NJWS
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/jakepwheeler
 [product-screenshot]: images/screenshot.png
+[Python.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Python-url]: https://www.python.org
+[Django.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Django-url]: https://www.djangoproject.com
+[DigitalOcean.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[DigitalOcean-url]: https://www.digitalocean.com/
+[AWS.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[AWS-url]: https://aws.amazon.com
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
