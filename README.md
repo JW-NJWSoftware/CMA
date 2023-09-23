@@ -62,10 +62,24 @@ Project detail and documentation
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Draft user stories for MVP
+    - [ ] Users can only see their files
+    - [ ] Allow users to view files in app
+- [ ] Functional tests based on user stories
+    - [ ] Validation on inputs
+    - [ ] User account password rules updates
+- [ ] Update CMA to meet functional tests
+- [ ] Seperate files into directories by users
+- [ ] CI pipeline to run tests
+- [ ] use bootstrap to restyle UI
+    - [ ] add side navigation bar for UX
+- [ ] Update project documentation with project overview
+- [ ] Home page to outline CMA and project overview
+    - [ ] include Nav bar to access CMA
+- [ ] Research microservice hosting for nlp and ml algorithms
+    - [ ] add DO function to host microservice
+    - [ ] add app DB/ bucket storage for hosting file data in json format
+- [ ] Research snyk
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
