@@ -10,7 +10,7 @@ class CMDoc(models.Model):
     fileName = models.CharField(default="", max_length=120)
     desc = models.TextField(default="")
     slug = models.SlugField(max_length=50, blank=True, null=True)
-    #file = models.FileField(upload_to='uploads/')
+    file = models.FileField(upload_to='cmdocs/', default="")
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -23,4 +23,6 @@ class CMDoc(models.Model):
 
     def get_absolute_url(self):
         return reverse("view_file", kwargs={"slug": self.slug})
-        #return f'view/{self.slug}'
+    
+    def get_download_url(self):
+        return reverse("download_file", kwargs={"file_id": self.id})

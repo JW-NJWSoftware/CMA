@@ -17,5 +17,8 @@
                 <p>{{CMDoc.desc}}</p>
             </div>
         </div>
+        <form action="{{ CMDoc.get_download_url }}">
+            <input type="submit" value="Download File" />
+        </form>
     </body>
 </html>

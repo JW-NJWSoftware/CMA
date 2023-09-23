@@ -5,8 +5,7 @@ from crisisManagementAssistant.models import CMDoc
 class CMDocForm(forms.ModelForm):
     class Meta:
         model = CMDoc
-        #fields = ('file', 'fileName',)
-        fields = ('fileName', 'desc',)
+        fields = ('fileName', 'desc', 'file')
         widgets = {
             'fileName': forms.fields.TextInput(attrs={
                 'placeholder': 'Enter a name for your file',
