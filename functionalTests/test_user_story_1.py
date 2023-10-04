@@ -14,3 +14,8 @@
 
 from .base import FunctionalTest
 from selenium.webdriver.common.by import By
+
+class FileManagement(FunctionalTest):
+
+    def test_can_view_files(self):
+        pass
