@@ -45,7 +45,6 @@
 [![Product Name Screen Shot][product-screenshot]](https://cma.resilienceai.co.uk/)
 
 <a href="https://docs.google.com/document/d/1K2QEk2WXCRzSwkGfT5IOR2Sxt5aAYoTugGxkNMpVKoc/edit?usp=sharing">Project detail and documentation</a>
-Project detail and documentation: 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
