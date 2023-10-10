@@ -25,5 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include("authentication.urls")),
     path('CMA/', include("crisisManagementAssistant.urls")),
-    path('cma/', lambda request: redirect('CMA/', permanent=False)),
+    path('cma/', include("crisisManagementAssistant.urls")),
 ]
