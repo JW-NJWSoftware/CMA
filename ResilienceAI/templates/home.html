@@ -13,9 +13,9 @@
         <script src='{% static "bootstrap-5.0.2/js/bootstrap.bundle.min.js"%}'></script>   
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid ">
         <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="col-md-1 fixed-top bg-dark">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <span class="fs-5 d-none d-sm-inline">Menu</span>
@@ -95,14 +95,34 @@
                     </div>
                 </div>
             </div>
-            <div class="col py-3">
-                <h3>Left Sidebar with Submenus</h3>
-                <p class="lead">
-                    An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
-                    menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
-                <ul class="list-unstyled">
-                    <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
-                </ul>
+            <div class="col offset-md-1">
+                <div>
+                    <div class="row">
+                        <nav class="navbar sticky-top col-auto navbar-light bg-light">
+                            <form class="form-inline">
+                              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                          </nav>
+                    </div>
+                    <h3>Left Sidebar with Submenus</h3>
+                    <p class="lead">
+                        An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
+                        menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
+                    <ul class="list-unstyled">
+                        <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
+                    </ul>
+                    <div style="width:20px;height:10;overflow-y:auto" >
+                        text text text text text text text text text
+                        text text text text text text text text text
+                        text text text text text text text text text
+                        text text text text text text text text text
+                        text text text text text text text text text
+                        text text text text text text text text text
+                        text text text text text text text text text
+                        text text text text text text text text text
+                       </div>
+                </div>
             </div>
         </div>
     </div>
