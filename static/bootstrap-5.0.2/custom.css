@@ -1,0 +1,10 @@
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+ }
+
+ input[type="text"], input[type="password"], textarea {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000000; /* You can adjust the color and thickness of the outline */
+  }
