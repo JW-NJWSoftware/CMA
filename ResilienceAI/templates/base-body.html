@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+<body>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-md-1 fixed-top bg-dark nopadding nomargin">
+                <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
+                    <div class="mx-auto pt-3">
+                        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                            <img src='{% static "icons/favicon-white.svg"%}' width="55" height="55" class="square">
+                        </a>
+                    </div>
+                    {% block side-buttons %}
+                    {% endblock %}
+                    <hr>
+                    <div class="container-fluid nopadding nomargin nooverflow">
+                        <div class="pb-3">
+                            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                                <li class="fillwidth">
+                                    <a href="#" class="nav-link nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Guides</span></button-sidebar>
+                                    </a>
+                                </li>
+                                <li class="fillwidth">
+                                    <a href="#" class="nav-link nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Settings</span></button-sidebar>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nopadding nomargin">
+                <div class="col offset-md-1">  
+                    <nav class="navbar sticky-top col-auto navbar-light bg-white shadow">
+                        <div class="container-fluid row p-2">
+                            <div class="col-12 col-sm-6 col-md-10">
+                                <form class="form-inline">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input class="form-control no-outline" type="text" placeholder="Search" aria-label="Search">
+                                        </div>
+                                        <div class="col">
+                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="float-end">
+                                    {% block user %}
+                                    {% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
