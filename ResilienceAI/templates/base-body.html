@@ -13,8 +13,32 @@
                             <img src='{% static "icons/favicon-white.svg"%}' width="55" height="55" class="square">
                         </a>
                     </div>
-                    {% block side-buttons %}
-                    {% endblock %}
+                    <div class="container-fluid px-0 pt-3 nomargin nooverflow mb-sm-auto mb-0">
+                        {% if user.is_authenticated %}
+                            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                                <li class="fillwidth">
+                                    <a href="#" class="nav-link nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Home</span></button-sidebar>
+                                    </a>
+                                </li>
+                                <li class="fillwidth">
+                                    <a href="CMA" class="nav-link nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Files</span></button-sidebar>
+                                    </a>
+                                </li>
+                                <li class="fillwidth">
+                                    <a href="#" class="nav-link nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Chats</span></button-sidebar>
+                                    </a>
+                                </li>
+                                <li class="fillwidth">
+                                    <a href="#" class="nav-link nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Manage</span></button-sidebar>
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
                     <hr>
                     <div class="container-fluid nopadding nomargin nooverflow">
                         <div class="pb-3">
@@ -39,21 +63,40 @@
                     <nav class="navbar sticky-top col-auto navbar-light bg-white shadow">
                         <div class="container-fluid row p-2">
                             <div class="col-12 col-sm-6 col-md-10">
-                                <form class="form-inline">
-                                    <div class="row">
-                                        <div class="col">
-                                            <input class="form-control no-outline" type="text" placeholder="Search" aria-label="Search">
+                                {% if user.is_authenticated %}
+                                    <form class="form-inline">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-control no-outline" type="text" placeholder="Search" aria-label="Search">
+                                            </div>
+                                            <div class="col">
+                                                <button class="btn-change bg-dark my-2 my-sm-0" type="submit">Search</button>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                {% endif %}
                             </div>
                             <div class="col-6 col-md-2">
                                 <div class="float-end">
-                                    {% block user %}
-                                    {% endblock %}
+                                    {% if user.is_authenticated %}
+                                        <div class="dropdown">
+                                            <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src='{% static "icons/user.png"%}' width="40" height="40" class="rounded-circle">
+                                                <span class="d-none d-sm-inline mx-1">{{request.user.username}}</span>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
+                                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
+                                            </ul>
+                                        </div>
+                                    {% else %}
+                                        <a href="/auth/login/?next=/" class="nav-link nopadding nomargin">
+                                            <button class="btn-change bg-dark my-2 my-sm-0">Sign In</button>
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

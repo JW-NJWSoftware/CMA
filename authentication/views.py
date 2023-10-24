@@ -9,7 +9,8 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('/CMA')
+            next_url = request.GET.get("next")    
+            return redirect(next_url)
     else:
         form = AuthenticationForm(request)
     context = {"form":form}
@@ -18,7 +19,7 @@ def login_view(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)
-        return redirect("/auth/login")
+        return redirect("/")
     return render(request, "auth/logout.html")
 
 def register_view(request):

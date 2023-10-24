@@ -1,10 +1,4 @@
-from django.http import HttpResponse
-from django.template.loader import render_to_string
+from django.shortcuts import render, redirect
 
 def home(request):
-  
-
-
-    HTML_string = render_to_string("home.html")
-
-    return HttpResponse(HTML_string)
+    return render(request, "home.html")

@@ -2,57 +2,12 @@
 
 {% load static %}
 
-{% block side-buttons %}
-<div class="container-fluid px-0 pt-3 nomargin nooverflow mb-sm-auto mb-0">
-    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-        <li class="fillwidth">
-            <a href="#" class="nav-link nopadding nomargin">
-                <button-sidebar class="py-3"><span class="m-3">Home</span></button-sidebar>
-            </a>
-        </li>
-        <li class="fillwidth">
-            <a href="CMA" class="nav-link nopadding nomargin">
-                <button-sidebar class="py-3"><span class="m-3">Files</span></button-sidebar>
-            </a>
-        </li>
-        <li class="fillwidth">
-            <a href="#" class="nav-link nopadding nomargin">
-                <button-sidebar class="py-3"><span class="m-3">Chats</span></button-sidebar>
-            </a>
-        </li>
-        <li class="fillwidth">
-            <a href="#" class="nav-link nopadding nomargin">
-                <button-sidebar class="py-3"><span class="m-3">Manage</span></button-sidebar>
-            </a>
-        </li>
-    </ul>
-</div>
-{% endblock %}
-
-{% block user %}
-<div class="dropdown">
-    <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src='{% static "icons/user.png"%}' width="40" height="40" class="rounded-circle">
-        <span class="d-none d-sm-inline mx-1">User</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
-        <li><a class="dropdown-item" href="#">New project...</a></li>
-        <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
-    </ul>
-</div>
-{% endblock %}
-
 {% block content %}
 <div class="container-fluid pt-5">
     <div class="mx-auto" style="width: 75%;">
         <h3>Crisis Management Assistant</h3>
         <p class="lead">
-            Having reviewed the existing problem and the market desires for a solution to fit this issue, possible solutions can be explored. The best existing solution explored was Everbridge but the critical issues this fails to solve is the automation of its processes and cost reductions. Adding these elements would make the tool accessible to small-medium companies and even larger organisations who want to begin exploring the crisis technology available to them without investing too much initially. This matches the needs of the current market nicely as many organisations are being pushed towards more mature crisis structures due to ongoing regulation and legislation implementations.
+            Having reviewed the existing problem and the market desires for a solution to fix this issue, possible solutions can be explored. The best existing solution explored was Everbridge but the critical issues this fails to solve is the automation of its processes and cost reductions. Adding these elements would make the tool accessible to small-medium companies and even larger organisations who want to begin exploring the crisis technology available to them without investing too much initially. This matches the needs of the current market nicely as many organisations are being pushed towards more mature crisis structures due to ongoing regulation and legislation implementations.
         </p>
         <p>
             Over the last 2 years AI and generative models have had a significant impact in the professional environment, across a number of industries, as they have been adapted to a user friendly and accessible format. Taking a similar approach and applying modern AI models to this problem could provide a valuable output for clients. The benefit of this would be that any approach would be both automated and simple for a user to approach. This opens up mature crisis management capabilities to a new client base without requiring too much investment or initial executive buy-in from clients.
