@@ -1,10 +1,55 @@
 .nopadding {
     padding: 0 !important;
-    margin: 0 !important;
  }
+
+ .nomargin {
+   margin: 0 !important;
+}
+
+.nooverflow {
+   overflow:hidden; 
+   word-wrap:break-word;
+}
+
+.fillwidth {
+   width: 100%;
+}
 
  input[type="text"], input[type="password"], textarea {
     border: none;
     outline: none;
     border-bottom: 1px solid #000000; /* You can adjust the color and thickness of the outline */
   }
+
+  button-sidebar {
+   border-radius: 4px;
+   border: none;
+   color: #fff;
+   text-align: left;
+   transition: all 0.5s;
+   cursor: pointer; 
+   font-size:1.2vw;
+   width: 100%;
+ }
+ 
+ button-sidebar{
+   cursor: pointer;
+   display: inline-block;
+   position: relative;
+   transition: 0.5s;
+ }
+ 
+ button-sidebar:after {
+   opacity: 0;  
+   transition: 0.5s;
+ }
+ 
+ button-sidebar:hover{
+   padding-right:16px;
+   padding-left:8px;
+ }
+ 
+ button-sidebar:hover:after {
+   opacity: 1;
+   right: 10px;
+ }

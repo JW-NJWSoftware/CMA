@@ -1,135 +1,71 @@
+{% extends 'base-body.html' %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Crisis Management Assistant</title>
-        <link rel="icon" type="image/x-icon" href='{% static "favicon.ico"%}'>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href='{% static "bootstrap-5.0.2/custom.css"%}'>   
-        <link rel="stylesheet" href='{% static "bootstrap-5.0.2/normalize.min.css"%}'>   
-        <link rel="stylesheet" href='{% static "bootstrap-5.0.2/css/bootstrap.min.css"%}'>   
-        <script src='{% static "js/jquery.min.js"%}'></script>
-        <script src='{% static "js/popper.min.js"%}'></script>
-        <script src='{% static "bootstrap-5.0.2/js/bootstrap.bundle.min.js"%}'></script>   
-    </head>
-    <body>
-        <div class="container-fluid ">
-            <div class="row flex-nowrap">
-                <div class="col-md-1 fixed-top bg-dark nopadding">
-                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <span class="fs-5 d-none d-sm-inline">Menu</span>
-                        </a>
-                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link align-middle px-0">
-                                    <span class="ms-1 d-none d-sm-inline">Home</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <span class="ms-1 d-none d-sm-inline">Dashboard</span> 
-                                </a>
-                            <li>
-                                <a href="#" class="nav-link px-0 align-middle">
-                                    <span class="ms-1 d-none d-sm-inline">Orders</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                    <span class="ms-1 d-none d-sm-inline">Bootstrap</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <span class="ms-1 d-none d-sm-inline">Products</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0 align-middle">
-                                    <span class="ms-1 d-none d-sm-inline">Customers</span> 
-                                </a>
-                            </li>
-                        </ul>
-                        <hr>
-                        <div class="container-fluid nopadding">
-                            <div class="pb-3">
-                                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link align-middle px-0">
-                                            <span class="ms-1 d-none d-sm-inline">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link align-middle px-0">
-                                            <span class="ms-1 d-none d-sm-inline">Guides</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nopadding">
-                    <div class="col offset-md-1">  
-                        <nav class="navbar sticky-top col-auto navbar-light bg-white shadow">
-                            <div class="container-fluid row p-2">
-                                <div class="col-12 col-sm-6 col-md-10">
-                                    <form class="form-inline">
-                                        <div class="row">
-                                            <div class="col">
-                                                <input class="form-control no-outline" type="text" placeholder="Search" aria-label="Search">
-                                            </div>
-                                            <div class="col">
-                                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-6 col-md-2">
-                                    <div class="float-end">
-                                        <div class="dropdown">
-                                            <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <img src='{% static "icons/user.png"%}' width="40" height="40" class="rounded-circle">
-                                                <span class="d-none d-sm-inline mx-1">User</span>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
-                                                <li><a class="dropdown-item" href="#">New project...</a></li>
-                                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item" href="#">Sign out</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </nav>
-                        <div class="container-fluid p-4">
-                            <h3>Left Sidebar with Submenus</h3>
-                            <p class="lead">
-                                An example 2-level sidebar with collasible menu items. The menu functions like an "accordion" where only a single 
-                                menu is be open at a time. While the sidebar itself is not toggle-able, it does responsively shrink in width on smaller screens.</p>
-                            <ul class="list-unstyled">
-                                <li><h5>Responsive</h5> shrinks in width, hides text labels and collapses to icons only on mobile</li>
-                            </ul>
-                            <div style="width:40px;overflow-y:auto" >
-                                text text text text text text text text text
-                                text text text text text text text text text
-                                text text text text text text text text text
-                                text text text text text text text text text
-                                text text text text text text text text text
-                                text text text text text text text text text
-                                text text text text text text text text text
-                                text text text text text text text text text
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+
+{% block side-buttons %}
+<div class="container-fluid px-0 pt-3 nomargin nooverflow mb-sm-auto mb-0">
+    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+        <li class="fillwidth">
+            <a href="#" class="nav-link nopadding nomargin">
+                <button-sidebar class="py-3"><span class="m-3">Home</span></button-sidebar>
+            </a>
+        </li>
+        <li class="fillwidth">
+            <a href="CMA" class="nav-link nopadding nomargin">
+                <button-sidebar class="py-3"><span class="m-3">Files</span></button-sidebar>
+            </a>
+        </li>
+        <li class="fillwidth">
+            <a href="#" class="nav-link nopadding nomargin">
+                <button-sidebar class="py-3"><span class="m-3">Chats</span></button-sidebar>
+            </a>
+        </li>
+        <li class="fillwidth">
+            <a href="#" class="nav-link nopadding nomargin">
+                <button-sidebar class="py-3"><span class="m-3">Manage</span></button-sidebar>
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block user %}
+<div class="dropdown">
+    <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src='{% static "icons/user.png"%}' width="40" height="40" class="rounded-circle">
+        <span class="d-none d-sm-inline mx-1">User</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid pt-5">
+    <div class="mx-auto" style="width: 75%;">
+        <h3>Crisis Management Assistant</h3>
+        <p class="lead">
+            Having reviewed the existing problem and the market desires for a solution to fit this issue, possible solutions can be explored. The best existing solution explored was Everbridge but the critical issues this fails to solve is the automation of its processes and cost reductions. Adding these elements would make the tool accessible to small-medium companies and even larger organisations who want to begin exploring the crisis technology available to them without investing too much initially. This matches the needs of the current market nicely as many organisations are being pushed towards more mature crisis structures due to ongoing regulation and legislation implementations.
+        </p>
+        <p>
+            Over the last 2 years AI and generative models have had a significant impact in the professional environment, across a number of industries, as they have been adapted to a user friendly and accessible format. Taking a similar approach and applying modern AI models to this problem could provide a valuable output for clients. The benefit of this would be that any approach would be both automated and simple for a user to approach. This opens up mature crisis management capabilities to a new client base without requiring too much investment or initial executive buy-in from clients.
+        </p>
+        <p>
+            The base of the application should take from the key needs of an emerging crisis team. The most critical need is a secure out of environment storage space for crisis documentation, and the ability to access, download, edit and upload these documents with a high level of availability guaranteed over this. To achieve this, a web application hosted with a dependable cloud service provider could guarantee the necessary uptime. Using this platform to host a bare bones but secure application that handles a back end file server to store user documents would meet the initial requirements of users.
+        </p>
+        <p>
+            Proceeding on from this, the AI models discussed could be run on a backend microservice to provide automated analysis of user documents. This analysis should be trained on industry standard documentation, allowing it to pull out issues with user documents and recommend updates. Furthermore, drawing from tools such as pdf.ai, this data analysis should make use of Natural Language Processing techniques to provide chat functionality with the document. This would allow inexperienced crisis responders to make quick and efficient use of their documentation. Functionality could include, checking decisions against documented decision criteria and thresholds, gathering required information prior to an action or decision and managing a crisis directly with the chatbot by inputting details of an ongoing incident and receiving recommendations for actions from a user's pre-uploaded and analysed documents.
+       </p>
+        <p>
+            In summary, this proposed solution would combine a secure and dependable web application with advanced AI models to provide an efficient, cheap and accessible tool for crisis management. This would appeal to a number of audiences and support clients to meet new and ever expanding expectations for organisational resilience and crisis management.
+        </p>
+    </div>
+</div>
+{% endblock %}
