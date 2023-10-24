@@ -1,27 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Crisis Management Assistant</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
+{% extends 'base-body.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div>
+        <h1>Crisis Management Assistant</h1>
+    </div>
+    <div>
+        {% if not user.is_authenticated %}
         <div>
-            <h1>Crisis Management Assistant</h1>
+            <h2>Register</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="'submit">Register</button>
+            </form>
+            <p>Do you already have an account? <a href='/auth/login/'>Login</a></p>
         </div>
-        <div>
-            {% if not user.is_authenticated %}
-            <div>
-                <h2>Register</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <button type="'submit">Register</button>
-                </form>
-                <p>Do you already have an account? <a href='/auth/login/'>Login</a></p>
-            </div>
-            {%else%}
-            <p>You are already logged in. Would you like to <a href='/auth/logout/'>logout</a>?</p>
-            {%endif%}
-        </div>
-    </body>
-</html>
+        {%else%}
+        <p>You are already logged in. Would you like to <a href='/auth/logout/'>logout</a>?</p>
+        {%endif%}
+    </div>
+{% endblock %}

@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Crisis Management Assistant</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <div>
-            <h1>Crisis Management Assistant</h1>
-        </div>
-        <div>
-            <div>
-                <h2>Login</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <button type="submit">Login</button>
-                </form>
-                <p>Would you like to <a href='/auth/register/'>register</a>?</p>
-            </div>
-        </div>
-    </body>
-</html>
+{% extends 'base-body.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Login</button>
+    </form>
+    <p>Would you like to <a href='/auth/register/'>register</a>?</p>
+{% endblock %}
