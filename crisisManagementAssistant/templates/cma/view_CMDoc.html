@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Crisis Management Assistant</title>
-         <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="/static/bootstrap-5.0.2/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container">
-            <h1 class="display-1 mb-4">Crisis Management Assistant</h1>
-        </div>
+{% extends 'base-body.html' %}
+
+{% load static %}
+
+{% block content %}
         <div class="container">
             <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
                 <h2 class="display-1 mb-2">{{CMDoc.fileName}}</h2>
                 <p>{{CMDoc.desc}}</p>
             </div>
         </div>
+        <div class="container">
+            <iframe src="{{ CMDoc.file.url }}" width="100%" height="600px" frameborder="0"></iframe>
+        </div>
         <form action="{{ CMDoc.get_download_url }}">
             <input type="submit" value="Download File" />
         </form>
     </body>
-</html>
+{% endblock %}

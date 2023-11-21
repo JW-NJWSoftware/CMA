@@ -26,3 +26,6 @@ class CMDoc(models.Model):
     
     def get_download_url(self):
         return reverse("download_file", kwargs={"file_id": self.id})
+
+    def get_delete_url(self):
+        return reverse("delete_file", kwargs={"file_id": self.id})
