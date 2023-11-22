@@ -15,7 +15,7 @@ def login_view(request):
             return redirect(next_url)
         else:
             # Add an error message if authentication fails
-            messages.ERROR(request, 'Invalid username or password')
+            messages.error(request, 'Invalid username or password')
     else:
         form = AuthenticateForm(request)
     context = {"form":form}
@@ -32,10 +32,11 @@ def register_view(request):
         form = UserCreateForm(request.POST or None)
         if form.is_valid():
             user_obj = form.save()
+            messages.success(request, 'Account created successfully')
             return redirect('/auth/login')
         else:
             # Add an error message if registration fails
-            messages.ERROR(request, 'Invalid registration details')
+            messages.error(request, 'Invalid registration details')
     else:
         form = UserCreateForm()
     context = {"form": form}
