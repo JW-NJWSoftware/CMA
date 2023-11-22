@@ -13,6 +13,9 @@
                     <div class="card" >
                         <div class="card-body ">
                             <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Files</p>
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                            {% endfor %}
                             <ul>
                                 {% if files %}
                                 <table class="table align-middle mb-0 bg-white">

@@ -99,8 +99,30 @@ def download_file(request, file_id):
 
 def delete_file(request, file_id):
 
-    uploaded_file = CMDoc.objects.get(pk=file_id)
-    uploaded_file.delete()
+    file_obj = get_object_or_404(CMDoc, pk=file_id)
+
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION_NAME,
+        endpoint_url=AWS_S3_ENDPOINT_URL
+    )
+
+    try:
+        # Delete the file from the S3 bucket
+        s3_client.delete_object(
+            Bucket=AWS_STORAGE_BUCKET_NAME,
+            Key="media/" + str(file_obj.file)
+        )
+
+    except ClientError as e:
+        # Handle any exceptions or errors
+        messages.ERROR(request, 'An error has occured. Please try again.')
+
+        return redirect('view_all_files')
+
+    file_obj.delete()
 
     return redirect('view_all_files')
 
