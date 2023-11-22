@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+<body>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-md-1 fixed-top bg-dark nopadding nomargin vh-100" style="max-width: calc(25vw); min-width: 100px;">
+                <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100 px-2">
+                    <div class="mx-auto pt-3">
+                        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                            <img src='{% static "icons/favicon-white.svg"%}' width="55" height="55" class="square">
+                        </a>
+                    </div>
+                    <div class="container-fluid px-0 pt-3 nomargin nooverflow mb-sm-auto mb-0">
+                        {% if user.is_authenticated %}
+                            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                                <li class="fillwidth">
+                                    <a href="/#" class="nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Home</span></button-sidebar>
+                                    </a>
+                                </li>
+                                <li class="fillwidth">
+                                    <a href="/CMA" class="nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Files</span></button-sidebar>
+                                    </a>
+                                </li>
+                                <li class="fillwidth">
+                                    <a href="/#" class="nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Chats</span></button-sidebar>
+                                    </a>
+                                </li>
+                                <li class="fillwidth">
+                                    <a href="/#" class="nopadding nomargin">
+                                        <button-sidebar class="py-3"><span class="m-3">Manage</span></button-sidebar>
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="container-fluid nopadding nomargin nooverflow">
+                        {% if user.is_authenticated %}
+                            <div class="pb-3">
+                                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                                    <li class="fillwidth">
+                                        <a href="/#" class="nopadding nomargin">
+                                            <button-sidebar class="py-3"><span class="m-3">Guides</span></button-sidebar>
+                                        </a>
+                                    </li>
+                                    <li class="fillwidth">
+                                        <a href="/#" class="nopadding nomargin">
+                                            <button-sidebar class="py-3"><span class="m-3">Settings</span></button-sidebar>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="nopadding nomargin">
+                <div class="col offset-md-1">  
+                    <nav class="navbar sticky-top col-auto navbar-light bg-white shadow">
+                        <div class="container-fluid row p-2">
+                            <div class="col-12 col-sm-6 col-md-10">
+                                {% if user.is_authenticated %}
+                                    <form class="form-inline">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-control no-outline" type="text" placeholder="Search" aria-label="Search">
+                                            </div>
+                                            <div class="col">
+                                                <button class="btn-change bg-dark my-2 my-sm-0" type="submit">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <div class="float-end">
+                                    {% if user.is_authenticated %}
+                                        <div class="dropdown">
+                                            <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src='{% static "icons/user.png"%}' width="40" height="40" class="rounded-circle">
+                                                <span class="d-none d-sm-inline mx-1">{{request.user.username}}</span>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-light text-small shadow" aria-labelledby="dropdownUser1">
+                                                <li><a class="dropdown-item" href="/#">Profile</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                                <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
+                                            </ul>
+                                        </div>
+                                    {% else %}
+                                        <a href="/auth/login/?next=/" class="nav-link nopadding nomargin">
+                                            <button class="btn-change bg-dark my-2 my-sm-0">Sign In</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <section class="full-height">
+                        {% block container %}
+                        {% endblock %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
