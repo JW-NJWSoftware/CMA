@@ -3,17 +3,18 @@
 {% load static %}
 
 {% block content %}
-        <div class="container">
-            <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
-                <h2 class="display-1 mb-2">{{CMDoc.fileName}}</h2>
-                <p>{{CMDoc.desc}}</p>
-            </div>
+<div class="container">
+    <div class="container">
+        <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
+            <h2 class="display-1 mb-2">{{CMDoc.fileName}}</h2>
+            <p>{{CMDoc.desc}}</p>
         </div>
-        <div class="container">
-            <iframe src="{{ CMDoc.file.url }}" width="100%" height="600px" frameborder="0"></iframe>
-        </div>
-        <form action="{{ CMDoc.get_download_url }}">
-            <input type="submit" value="Download File" />
-        </form>
-    </body>
+    </div>
+    <div class="container">
+        <iframe src="{{ CMDoc.file.url }}" width="100%" height="600px" frameborder="0"></iframe>
+    </div>
+    <form action="{{ CMDoc.get_download_url }}">
+        <input type="submit" value="Download File" />
+    </form>
+</div>
 {% endblock %}

@@ -3,95 +3,83 @@
 {% load static %}
 
 {% block content %}
-    {% if not user.is_authenticated %}
-        <section class="vh-100" style="background-color: #eee;">
-            <div class="mask d-flex align-items-center h-100">
-                <div class="container h-100">
-                    <div class="row d-flex justify-content-center align-items-center h-100">
-                        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                            <div class="card" style="border-radius: 15px;">
-                                <div class="card-body p-5">
-                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-                                    {% for message in messages %}
-                                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                                    {% endfor %}
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        <div class="form-outline mb-4 border rounded" >
-                                            {{form.username}}
-                                            <label class="form-label" for="username">Your Name</label>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">                           
-                                                <div class="form-outline mb-4 border rounded" >
-                                                    {{form.first_name}}
-                                                    <label class="form-label" for="first_name">First Name</label>
-                                                </div>                           
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-outline mb-4 border rounded" >
-                                                    {{form.last_name}}
-                                                    <label class="form-label" for="last_name">Last Name</label>
-                                                </div>                           
-                                            </div>
-                                        </div>                     
-                                        <div class="form-outline mb-4 border rounded">
-                                            {{form.email}}
-                                            <label class="form-label" for="email">Your Email</label>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label class="form-label" for="password1">Password</label>
-                                            {{form.password1}}
-                                            <span class="helptext"></span>
-                                        </div>
-                        
-                                        <div class="mb-4">
-                                            <label class="form-label" for="password2">Repeat your password</label>
-                                            {{form.password2}}
-                                            <span class="helptext"></span>
-                                        </div>                                          
-
-                                        <ul>
-                                            <li>
-                                                Your password can’t be too similar to your other personal information.
-                                            </li>
-                                            <li>
-                                                Your password must contain at least 8 characters.
-                                            </li>
-                                            <li>
-                                                Your password can’t be a commonly used password.
-                                            </li>
-                                            <li>
-                                                Your password can’t be entirely numeric.
-                                            </li>
-                                        </ul>
-                    
-                                        <div class="form-check d-flex justify-content-center mb-4">
-                                            <input class="me-2" type="checkbox" value="" id="ToS" />
-                                            <label class="form-check-label" for="ToS">
-                                            I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
-                                            </label>
-                                        </div>
-                        
-                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                                        </div>
-                        
-                                        <p class="text-center text-muted mt-5 mb-0">Already have an account? 
-                                            <a href="/auth/login/" class="fw-bold text-body">
-                                                <u>Login here</u>
-                                            </a>
-                                        </p>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container">
+        {% if not user.is_authenticated %}
+            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-outline mb-4 border rounded" >
+                    {{form.username}}
+                    <label class="form-label" for="username">Your Name</label>
                 </div>
-            </div>
-        </section>
-    {%else%}
-        <p>You are already logged in. Would you like to <a href='/auth/logout/'>logout</a>?</p>
-    {%endif%}
+                <div class="row">
+                    <div class="col-md-6">                           
+                        <div class="form-outline mb-4 border rounded" >
+                            {{form.first_name}}
+                            <label class="form-label" for="first_name">First Name</label>
+                        </div>                           
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-outline mb-4 border rounded" >
+                            {{form.last_name}}
+                            <label class="form-label" for="last_name">Last Name</label>
+                        </div>                           
+                    </div>
+                </div>                     
+                <div class="form-outline mb-4 border rounded">
+                    {{form.email}}
+                    <label class="form-label" for="email">Your Email</label>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label" for="password1">Password</label>
+                    {{form.password1}}
+                    <span class="helptext"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label" for="password2">Repeat your password</label>
+                    {{form.password2}}
+                    <span class="helptext"></span>
+                </div>                                          
+
+                <ul>
+                    <li>
+                        Your password can’t be too similar to your other personal information.
+                    </li>
+                    <li>
+                        Your password must contain at least 8 characters.
+                    </li>
+                    <li>
+                        Your password can’t be a commonly used password.
+                    </li>
+                    <li>
+                        Your password can’t be entirely numeric.
+                    </li>
+                </ul>
+
+                <div class="form-check d-flex justify-content-center mb-4">
+                    <input class="me-2" type="checkbox" value="" id="ToS" />
+                    <label class="form-check-label" for="ToS">
+                    I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                    </label>
+                </div>
+
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                </div>
+
+                <p class="text-center text-muted mt-5 mb-0">Already have an account? 
+                    <a href="/auth/login/" class="fw-bold text-body">
+                        <u>Login here</u>
+                    </a>
+                </p>
+            </form>
+        {%else%}
+            <p>You are already logged in. Would you like to <a href='/auth/logout/'>logout</a>?</p>
+        {%endif%}
+    </div>
 {% endblock %}

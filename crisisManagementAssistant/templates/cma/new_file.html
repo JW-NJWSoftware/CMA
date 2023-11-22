@@ -3,30 +3,14 @@
 {% load static %}
 
 {% block content %}
-<section class="vh-100" style="background-color: #eee;">
-    <div class="container p-5">
-    <div class="mask d-flex align-items-center">
-        <div class="container">
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                    <div class="card" style="border-radius: 15px;">
-                        <div class="card-body p-5">
-                            <div class="container">
-                                <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
-                                    <h2 class="display-1 mb-2">New File</h2>
-                                    <form name="file" method="post" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        {{ form.as_p }}
-                                        <button type="submit" name="submit">Upload</button>
-                                    </form>   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+    <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
+        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">New File</p>
+        <form name="file" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" name="submit">Upload</button>
+        </form>   
     </div>
 </div>
-</section>
 {% endblock %}
