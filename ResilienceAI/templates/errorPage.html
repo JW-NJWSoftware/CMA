@@ -1,0 +1,11 @@
+{% extends 'base-body.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Error - {{ errorType }} </p>
+    <p class="text-center text-muted mt-5 mb-0">Your request has raised a {{ errorCode }} error.</p>
+    <p class="text-center text-muted mt-5 mb-0">{{ description }}</p>
+</div>
+{% endblock %}
