@@ -5,6 +5,8 @@ from django.shortcuts import get_object_or_404
 
 from crisisManagementAssistant.models import CMDoc
 
+from django.core.exceptions import PermissionDenied
+
 from crisisManagementAssistant.forms import CMDocForm
 
 from django.contrib.auth.decorators import login_required
@@ -49,13 +51,16 @@ def upload_file(request):
 
 def view_file(request, slug=None):
 
-    cmdoc_obj = None
+    file_obj = None
 
     if slug is not None:
 
-        cmdoc_obj = CMDoc.objects.get(slug=slug)
+        file_obj = get_object_or_404(CMDoc, slug=slug)
 
-    return render(request, 'cma/view_CMDoc.html', {'CMDoc': cmdoc_obj})
+        if file_obj.user != request.user:
+            raise PermissionDenied
+
+    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj})
 
 
 @login_required
@@ -63,6 +68,9 @@ def view_file(request, slug=None):
 def download_file(request, file_id):
 
     file_obj = get_object_or_404(CMDoc, pk=file_id)
+
+    if file_obj.user != request.user:
+        raise PermissionDenied
 
     fileName = file_obj.file.name.split('/')[-1]
 
@@ -100,6 +108,9 @@ def download_file(request, file_id):
 def delete_file(request, file_id):
 
     file_obj = get_object_or_404(CMDoc, pk=file_id)
+
+    if file_obj.user != request.user:
+        raise PermissionDenied
 
     s3_client = boto3.client(
         's3',

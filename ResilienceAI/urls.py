@@ -18,7 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import home
+from ResilienceAI.views import home, handler400, handler401, handler403, handler404, handler500
+
+handler400 = 'ResilienceAI.views.handler400'
+handler401 = 'ResilienceAI.views.handler401'
+handler403 = 'ResilienceAI.views.handler403'
+handler404 = 'ResilienceAI.views.handler404'
+handler500 = 'ResilienceAI.views.handler500'
 
 urlpatterns = [
     path('', home),
