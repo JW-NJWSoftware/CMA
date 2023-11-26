@@ -44,8 +44,6 @@ def upload_file(request):
             extracted = extract_info_via_api(obj.file)
             obj.extractData = extracted
 
-            print(extracted)
-
             obj.save()
 
             return redirect('view_all_files')
