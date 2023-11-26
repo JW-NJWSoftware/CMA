@@ -12,6 +12,7 @@ class CMDoc(models.Model):
     slug = models.SlugField(max_length=50, blank=True, null=True)
     file = models.FileField(upload_to='cmdocs/', default="")
     timestamp = models.DateTimeField(auto_now_add=True)
+    extractData = models.JSONField(blank=True, null=True)
 
     class Meta:
         ordering = ('id',)

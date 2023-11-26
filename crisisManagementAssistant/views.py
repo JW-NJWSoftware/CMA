@@ -12,6 +12,8 @@ from crisisManagementAssistant.forms import CMDocForm
 from django.contrib.auth.decorators import login_required
 
 from ResilienceAI.cdn.conf import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_LOCATION, AWS_STORAGE_BUCKET_NAME, AWS_S3_ENDPOINT_URL, AWS_REGION_NAME
+from ResilienceAI.services import extract_info_via_api
+
 from botocore.exceptions import ClientError
 
 import boto3, requests
@@ -36,8 +38,12 @@ def upload_file(request):
         if form.is_valid():
 
             obj = form.save(commit = False)
-            obj.user=request.user
+            obj.user=request.user       
+
+            obj.extractData = extract_info_via_api(obj.file)
+
             obj.save()
+
             return redirect('view_all_files')
 
     else:
