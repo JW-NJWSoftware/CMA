@@ -17,8 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
+from ResilienceAI.views import home
 
-from ResilienceAI.views import home, handler400, handler401, handler403, handler404, handler500
+from ResilienceAI.views import handler400, handler401, handler403, handler404, handler500
 
 handler400 = 'ResilienceAI.views.handler400'
 handler401 = 'ResilienceAI.views.handler401'

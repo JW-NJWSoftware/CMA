@@ -38,9 +38,13 @@ def upload_file(request):
         if form.is_valid():
 
             obj = form.save(commit = False)
-            obj.user=request.user       
+            obj.user=request.user   
+            obj.save()
+            
+            extracted = extract_info_via_api(obj.file)
+            obj.extractData = extracted
 
-            obj.extractData = extract_info_via_api(obj.file)
+            print(extracted)
 
             obj.save()
 
