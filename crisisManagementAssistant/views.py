@@ -68,7 +68,11 @@ def view_file(request, slug=None):
         if file_obj.user != request.user:
             raise PermissionDenied
 
-    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj})
+        data = file_obj.extractData
+
+        summary = data.get('summary')
+
+    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary)})
 
 
 @login_required
