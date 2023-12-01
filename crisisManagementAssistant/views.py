@@ -4,6 +4,7 @@ from django.http import HttpResponse, FileResponse
 from django.shortcuts import get_object_or_404
 
 from crisisManagementAssistant.models import CMDoc
+from authentication.models import CustomUser
 
 from django.core.exceptions import PermissionDenied
 
@@ -18,6 +19,28 @@ from botocore.exceptions import ClientError
 
 import boto3, requests
 
+
+@login_required
+def manage(request):
+    group = request.user.group
+    users = {}
+
+    if group:
+        users = CustomUser.objects.filter(group=group)
+
+    return render(request, 'cma/manage.html', {'group': users})
+
+@login_required
+def add_to_group(request, userEmail=None):
+
+    if userEmail:
+        user = CustomUser.objects.get(email=userEmail)
+        
+        if user.group is None:
+            user.group = request.user.group
+            user.save()
+
+    return redirect('view_manage')
 
 @login_required
 def view_all_files(request):

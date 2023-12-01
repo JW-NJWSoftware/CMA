@@ -14,6 +14,10 @@ urlpatterns = [
     path('download/<int:file_id>/', CMA_views.download_file, name='download_file'),
 
     path('delete/<int:file_id>/', CMA_views.delete_file, name='delete_file'),
+
+    path('manage/', CMA_views.manage, name='manage'),
+
+    path('manage/add/', CMA_views.add_to_group, name='add_to_group'),
 ]
 
 

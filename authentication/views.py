@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from authentication.forms import UserCreateForm, AuthenticateForm
+from authentication.forms import UserCreateForm, AuthenticateForm, ProfileForm
 
 def login_view(request):
     if request.method == "POST":
@@ -41,3 +41,17 @@ def register_view(request):
         form = UserCreateForm()
     context = {"form": form}
     return render(request, "auth/register.html", context)
+
+def profile_view(request):
+    if request.method == "POST":
+        form = ProfileForm(request.POST or None, instance=request.user)
+        if form.is_valid():
+            user_obj = form.save()
+            messages.success(request, 'Account updated')
+        else:
+            # Add an error message if registration fails
+            messages.error(request, 'Update failed')
+    else:
+        form = ProfileForm()
+    context = {"form": form, "user": request.user}
+    return render(request, "auth/profile.html", context)

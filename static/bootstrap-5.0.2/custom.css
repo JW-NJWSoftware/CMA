@@ -38,11 +38,7 @@
   -webkit-transform: scale(1.1);
 }
 
- input[type="text"], input[type="password"], textarea {
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #000000; /* You can adjust the color and thickness of the outline */
-  }
+
 
   button-sidebar {
    border-radius: 4px;

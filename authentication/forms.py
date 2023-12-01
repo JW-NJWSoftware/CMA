@@ -1,11 +1,11 @@
 from django import forms
-from django.contrib.auth.models import User
+from .models import CustomUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class UserCreateForm(UserCreationForm):
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ("username", "email", "first_name", "last_name", "password1", "password2")
         widgets = {
             'username': forms.fields.TextInput(attrs={
@@ -43,7 +43,7 @@ class UserCreateForm(UserCreationForm):
 class AuthenticateForm(AuthenticationForm):
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ("username", "password")
         widgets = {
             'username': forms.fields.TextInput(attrs={
@@ -59,3 +59,27 @@ class AuthenticateForm(AuthenticationForm):
         if commit:
             user.save()
         return user
+
+
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ("email", "first_name", "last_name")
+        widgets = {
+            'email': forms.fields.EmailInput(attrs={
+                'class': 'form-control form-control-lg',
+                'id': 'email',
+            }),
+            'first_name': forms.fields.TextInput(attrs={
+                'class': 'form-control form-control-lg',
+                'id': 'first_name',
+            }),
+            'last_name': forms.fields.TextInput(attrs={
+                'class': 'form-control form-control-lg',
+                'id': 'last_name',
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
