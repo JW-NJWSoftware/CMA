@@ -1,0 +1,53 @@
+{% extends 'base-body.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Manage</p>
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    <ul>
+        {% if group %}
+        <table class="table align-middle mb-0 bg-white">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Last Online</th>
+                <th></th>
+                </tr>
+            </thead>
+                <tbody>        
+                    {% for user in group %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="ms-3">
+                                            <p class="fw-bold mb-1">{{ user.username }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">{{ user.timeStamp }}</p>
+                                </div>
+                            </td>
+                        </tr>  
+                    {% endfor %}
+                </tbody>      
+        </table>
+        {% endif %}
+    </ul>
+    <form action="/cma/manage/add">
+        {% csrf_token %}
+        <label for="textfield">Email:</label>
+        <input type="text" id="user_email" name="user_email">  
+        <button type="submit">Add To Group</button>
+    </form>
+</div>
+{% endblock %}
