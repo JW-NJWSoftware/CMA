@@ -31,7 +31,8 @@ def manage(request):
     return render(request, 'cma/manage.html', {'group': users})
 
 @login_required
-def add_to_group(request, userEmail=None):
+def add_to_group(request):
+    userEmail = request.GET.get('user_email') or None
 
     if userEmail:
         user = CustomUser.objects.get(email=userEmail)
@@ -40,7 +41,20 @@ def add_to_group(request, userEmail=None):
             user.group = request.user.group
             user.save()
 
-    return redirect('view_manage')
+    return redirect('manage')
+
+@login_required
+def new_group(request):
+    group_name = request.GET.get('group_name') or None
+
+    if group_name:
+        user = request.user
+        
+        if user.group is None:
+            user.group = group_name
+            user.save()
+
+    return redirect('manage')
 
 @login_required
 def view_all_files(request):

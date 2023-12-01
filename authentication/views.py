@@ -7,8 +7,11 @@ def login_view(request):
     if request.method == "POST":
         form = AuthenticateForm(request, data=request.POST)
         if form.is_valid():
+
             user = form.get_user()
             login(request, user)
+            user.save()
+
             next_url = request.GET.get("next")
             if next_url is None:
                 next_url = "/"    

@@ -18,6 +18,8 @@ urlpatterns = [
     path('manage/', CMA_views.manage, name='manage'),
 
     path('manage/add/', CMA_views.add_to_group, name='add_to_group'),
+
+    path('manage/new/', CMA_views.new_group, name='new_group'),
 ]
 
 
