@@ -19,6 +19,8 @@ urlpatterns = [
 
     path('manage/add/', CMA_views.add_to_group, name='add_to_group'),
 
+    path('manage/remove/', CMA_views.remove_from_group, name='remove_from_group'),
+
     path('manage/new/', CMA_views.new_group, name='new_group'),
 ]
 

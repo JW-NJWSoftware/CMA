@@ -3,6 +3,9 @@ from django.shortcuts import render, redirect
 def home(request):
     return render(request, "home.html")
 
+def guides(request):
+    return render(request, "guides.html")
+
 def handler400(request, exception):
     context = {"errorCode":"400", "errorType":"Bad Request", "description":"This error indicates that the server cannot process the request due to a malformed or incorrect syntax. The request you made contains incorrect or incomplete information that the server cannot understand. Please ensure the request parameters or data are properly formatted and try again. If you believe this is a mistake, review the request details or contact support for further assistance."}
     return render(request, 'errorPage.html', context, status=400)

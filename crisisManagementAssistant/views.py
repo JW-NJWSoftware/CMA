@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.contrib import messages
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import get_object_or_404
 
@@ -24,22 +24,57 @@ import boto3, requests
 def manage(request):
     group = request.user.group
     users = {}
-
+    owner = False
+    
     if group:
         users = CustomUser.objects.filter(group=group)
 
-    return render(request, 'cma/manage.html', {'group': users})
+        if request.user.role == 'Owner':
+            owner = True
+
+    return render(request, 'cma/manage.html', {'group': users, 'owner': owner})
 
 @login_required
 def add_to_group(request):
     userEmail = request.GET.get('user_email') or None
 
     if userEmail:
-        user = CustomUser.objects.get(email=userEmail)
+        user = get_object_or_404(CustomUser, email=userEmail)
         
         if user.group is None:
             user.group = request.user.group
             user.save()
+            user.role = 'Member'
+            user.save()
+            messages.success(request, 'User added to group')
+
+        else:
+            messages.error(request, 'User is already in a group')
+    else:
+        messages.error(request, 'User not found')
+
+    return redirect('manage')
+
+@login_required
+def remove_from_group(request):
+    userEmail = request.GET.get('user_email') or None
+    print(userEmail)
+    if userEmail:
+        user = get_object_or_404(CustomUser, email=userEmail)
+  
+        if user.group == request.user.group:
+        
+            if request.user.role == 'Owner':
+
+                user.group = None
+                user.save()
+
+                user.role = None
+                user.save()
+            else:
+                raise PermissionDenied
+        else:
+            raise PermissionDenied
 
     return redirect('manage')
 
@@ -54,12 +89,22 @@ def new_group(request):
             user.group = group_name
             user.save()
 
+            user.role = 'Owner'
+            user.save()
+
     return redirect('manage')
 
 @login_required
 def view_all_files(request):
+    files = []
 
-    files = CMDoc.objects.filter(user=request.user)
+    if request.user.group:
+        users = CustomUser.objects.filter(group=request.user.group)
+        for user in users:
+            user_files = CMDoc.objects.filter(user=user)
+            files.extend(user_files)
+    else:
+        files = CMDoc.objects.filter(user=request.user)
 
     file_names_list = [CMDoc.file.name.split('/')[-1] for CMDoc in files]
 
@@ -102,11 +147,10 @@ def view_file(request, slug=None):
 
         file_obj = get_object_or_404(CMDoc, slug=slug)
 
-        if file_obj.user != request.user:
+        if file_obj.user != request.user and file_obj.user.group != request.user.group:
             raise PermissionDenied
 
         data = file_obj.extractData
-
         summary = data.get('summary')
 
     return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary)})
@@ -118,7 +162,7 @@ def download_file(request, file_id):
 
     file_obj = get_object_or_404(CMDoc, pk=file_id)
 
-    if file_obj.user != request.user:
+    if file_obj.user != request.user and file_obj.user.group != request.user.group:
         raise PermissionDenied
 
     fileName = file_obj.file.name.split('/')[-1]

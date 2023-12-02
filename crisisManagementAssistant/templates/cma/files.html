@@ -44,9 +44,11 @@
                     </td>
                     <td>{{ file.timestamp}}</td>
                     <td>
-                        <form action="{{ file.get_delete_url }}">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        {% if file.user == request.user %}
+                            <form action="{{ file.get_delete_url }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>  
                 {% endfor %}

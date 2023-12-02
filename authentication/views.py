@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from authentication.forms import UserCreateForm, AuthenticateForm, ProfileForm
+from authentication.models import CustomUser
 
 def login_view(request):
     if request.method == "POST":
