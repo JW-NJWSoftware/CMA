@@ -1,8 +1,41 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from crisisManagementAssistant.models import CMDoc, Chat
+from authentication.models import CustomUser
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, "home.html")
 
+@login_required
+def search(request):
+    search_value = request.GET.get('search_value') or None
+    files = []
+    chats = []
+    file_names_list = []
+    search = False
+
+    if search_value:
+        search = True
+        if request.user.group:
+            users = CustomUser.objects.filter(group=request.user.group)
+            for user in users:
+                user_files = CMDoc.objects.filter(user=user, fileName__icontains=search_value)
+                files.extend(user_files)
+                user_chats = Chat.objects.filter(user=user, chatName__icontains=search_value)
+                chats.extend(user_chats)
+        else:
+            files = CMDoc.objects.filter(user=request.user, fileName__icontains=search_value)
+            chats = Chat.objects.filter(user=request.user, chatName__icontains=search_value)
+
+        file_names_list = [CMDoc.file.name.split('/')[-1] for CMDoc in files]
+    
+    else:
+        messages.error(request, 'No search value provided.')
+
+    return render(request, "search.html", {'files': files, 'chats': chats, 'names': file_names_list, 'search': search})
+
+@login_required
 def guides(request):
     return render(request, "guides.html")
 

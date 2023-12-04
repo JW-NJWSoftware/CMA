@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-from ResilienceAI.views import home, guides
+from ResilienceAI.views import home, guides, search
 
 from ResilienceAI.views import handler400, handler401, handler403, handler404, handler500
 
@@ -29,6 +29,7 @@ handler500 = 'ResilienceAI.views.handler500'
 
 urlpatterns = [
     path('', home),
+    path('search/', search),
     path('guides/', guides),
     path('admin/', admin.site.urls),
     path('auth/', include("authentication.urls")),

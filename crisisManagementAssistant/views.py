@@ -231,7 +231,7 @@ def delete_file(request, file_id):
 
     except ClientError as e:
         # Handle any exceptions or errors
-        messages.ERROR(request, 'An error has occured. Please try again.')
+        messages.error(request, 'An error has occured. Please try again.')
 
         return redirect('view_all_files')
 
@@ -283,11 +283,16 @@ def delete_chat(request, slug=None):
 def new_chat(request):
     chat_name = request.GET.get('chat_name') or None
 
-    new_chat = Chat.objects.create(
-        user=request.user,
-        chatName=chat_name
-    )
- 
-    new_chat.save()
+    if chat_name:
+        new_chat = Chat.objects.create(
+            user=request.user,
+            chatName=chat_name
+        )
+    
+        new_chat.save()
 
-    return redirect('view_chat', slug=new_chat.slug)
+        return redirect('view_chat', slug=new_chat.slug)
+
+    else:
+        messages.ERROR(request, 'No chat name provided')
+        return redirect('view_all_chats')
