@@ -13,7 +13,6 @@ class CMDoc(models.Model):
     file = models.FileField(upload_to='cmdocs/', default="")
     timestamp = models.DateTimeField(auto_now=True)
     extractData = models.JSONField(blank=True, null=True)
-    group = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ('id',)
@@ -31,4 +30,26 @@ class CMDoc(models.Model):
 
     def get_delete_url(self):
         return reverse("delete_file", kwargs={"file_id": self.id})
+
+
+class Chat(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
+    chatName = models.CharField(default="", max_length=120)
+    slug = models.SlugField(max_length=50, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now=True)
+    chatData = models.JSONField(blank=True, null=True)
+
+    class Meta:
+        ordering = ('id',)
+
+    def save(self, *args, **kwargs):
+        slug = "%s" % (self.chatName)
+        unique_slugify(self, slug)
+        super(Chat, self).save(**kwargs)
+
+    def get_absolute_url(self):
+        return reverse("view_chat", kwargs={"slug": self.slug})
+
+    def get_delete_url(self):
+        return reverse("delete_chat", kwargs={"slug": self.slug})
 

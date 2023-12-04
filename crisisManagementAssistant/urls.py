@@ -22,6 +22,14 @@ urlpatterns = [
     path('manage/remove/', CMA_views.remove_from_group, name='remove_from_group'),
 
     path('manage/new/', CMA_views.new_group, name='new_group'),
+
+    path("chat/", CMA_views.view_all_chats, name="view_all_chats"),
+
+    path('chat/view/<slug:slug>/', CMA_views.view_chat, name='view_chat'),
+
+    path("chat/new", CMA_views.new_chat, name="new_chat"),
+
+    path('chat/delete/<slug:slug>/', CMA_views.delete_chat, name='delete_chat'),
 ]
 
 

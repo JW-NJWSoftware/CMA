@@ -1,0 +1,19 @@
+{% extends 'base-body.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="container">
+        <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
+            <h2 class="display-1 mb-2">{{chat.chatName}}</h2>              
+        </div>
+    </div>
+    {% if chat.user == request.user %}
+    <form action="{{ chat.get_delete_url }}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

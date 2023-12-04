@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import get_object_or_404
 
-from crisisManagementAssistant.models import CMDoc
+from crisisManagementAssistant.models import CMDoc, Chat
 from authentication.models import CustomUser
 
 from django.core.exceptions import PermissionDenied
@@ -86,11 +86,20 @@ def new_group(request):
         user = request.user
         
         if user.group is None:
-            user.group = group_name
-            user.save()
+            existingGroup = CustomUser.objects.filter(group=group_name)
+            #print(existingGroup)
+            if not existingGroup:
+                user.group = group_name
+                user.save()
 
-            user.role = 'Owner'
-            user.save()
+                user.role = 'Owner'
+                user.save()
+            else:
+                messages.error(request, 'Group already exists')
+        else:
+            messages.error(request, 'User already in group')
+    else:
+        messages.error(request, 'Please enter a group name')
 
     return redirect('manage')
 
@@ -230,3 +239,55 @@ def delete_file(request, file_id):
 
     return redirect('view_all_files')
 
+
+@login_required
+def view_all_chats(request):
+    chats = []
+
+    if request.user.group:
+        users = CustomUser.objects.filter(group=request.user.group)
+        for user in users:
+            user_chats = Chat.objects.filter(user=user)
+            chats.extend(user_chats)
+    else:
+        chats = Chat.objects.filter(user=request.user)
+
+    return render(request, 'cma/chats.html', {'chats': chats})
+
+@login_required
+def view_chat(request, slug=None):
+    chat_obj = None
+    if slug is not None:
+        chat_obj = get_object_or_404(Chat, slug=slug)
+
+        if chat_obj.user != request.user and chat_obj.user.group != request.user.group:
+            raise PermissionDenied
+
+        data = chat_obj.chatData
+
+    return render(request, 'cma/view_chat.html', {'chat': chat_obj})
+
+@login_required
+def delete_chat(request, slug=None):
+
+    chat_obj = get_object_or_404(Chat, slug=slug)
+
+    if chat_obj.user != request.user:
+        raise PermissionDenied
+
+    chat_obj.delete()
+
+    return redirect('view_all_chats')
+
+@login_required
+def new_chat(request):
+    chat_name = request.GET.get('chat_name') or None
+
+    new_chat = Chat.objects.create(
+        user=request.user,
+        chatName=chat_name
+    )
+ 
+    new_chat.save()
+
+    return redirect('view_chat', slug=new_chat.slug)

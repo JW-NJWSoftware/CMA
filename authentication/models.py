@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
     group = models.TextField(blank=True, null=True)
     timeStamp = models.DateTimeField(auto_now=True)
     role = models.TextField(blank=True, null=True)
