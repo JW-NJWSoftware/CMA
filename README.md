@@ -64,6 +64,18 @@
 <!-- ROADMAP -->
 ## Roadmap
 
+- /Scripts/activate
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py collectstatic --noinput
+- python manage.py runserver
+
+- export PYTHONPATH='D:\Python311\python.exe'
+- export PYTHONPATH='C:\Users\Jakep\AppData\Local\Programs\Python\Python311'
+
+<!-- ROADMAP -->
+## Roadmap
+
 - [ ] Draft user stories for MVP
     - [ ] Users can only see their files
     - [ ] Allow users to view files in app
