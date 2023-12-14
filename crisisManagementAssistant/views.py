@@ -123,20 +123,19 @@ def view_all_files(request):
 def upload_file(request):
 
     if request.method == 'POST':
-
+        local = request.POST.get('switch_value') == 'on'
         form = CMDocForm(request.POST or None, request.FILES or None)
 
         if form.is_valid():
-
             obj = form.save(commit = False)
             obj.user=request.user   
             obj.save()
             
-            extracted = extract_info_via_api(obj.file)
+            extracted = extract_info_via_api(obj.file, local)
             obj.extractData = extracted
 
             obj.save()
-
+            
             return redirect('view_all_files')
 
     else:
@@ -161,8 +160,14 @@ def view_file(request, slug=None):
 
         data = file_obj.extractData
         summary = data.get('summary')
+        names = data.get('names')
 
-    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary)})
+        if names:
+            names_list = names.split(', ')
+        else:
+            names_list = None
+
+    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary), 'names_list': names_list})
 
 
 @login_required

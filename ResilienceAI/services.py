@@ -3,10 +3,17 @@ import os
 
 from django.core.files import File
 
-CMA_API_TOKEN_HEADER=os.environ.get("CMA_API_TOKEN_HEADER")
-CMA_API_ENDPOINT=os.environ.get("CMA_API_ENDPOINT")
+CMA_API_TOKEN_HEADER= None
+CMA_API_ENDPOINT= None
 
-def extract_info_via_api(file_obj: File=None):
+def extract_info_via_api(file_obj: File=None, local = False):
+    if local:
+        CMA_API_TOKEN_HEADER= os.environ.get("CMA_API_TOKEN_HEADER_LOCAL")
+        CMA_API_ENDPOINT= os.environ.get("CMA_API_ENDPOINT_LOCAL")
+    else:
+        CMA_API_TOKEN_HEADER= os.environ.get("CMA_API_TOKEN_HEADER")
+        CMA_API_ENDPOINT= os.environ.get("CMA_API_ENDPOINT")
+
     data = {}
 
     if CMA_API_TOKEN_HEADER is None:

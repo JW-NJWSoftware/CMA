@@ -11,4 +11,12 @@ class CMDocForm(forms.ModelForm):
                 'placeholder': 'Enter a name for your file',
                 'class': 'form-control form-control-lg',
             }),
+                        'desc': forms.Textarea(attrs={
+                'placeholder': 'Enter a description',
+                'class': 'form-control',
+                'rows': 3,
+            }),
+            'file': forms.FileInput(attrs={
+                'class': 'form-control-file',
+            }),
         }
