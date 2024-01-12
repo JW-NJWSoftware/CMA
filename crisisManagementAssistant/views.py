@@ -13,7 +13,7 @@ from crisisManagementAssistant.forms import CMDocForm
 from django.contrib.auth.decorators import login_required
 
 from ResilienceAI.cdn.conf import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_LOCATION, AWS_STORAGE_BUCKET_NAME, AWS_S3_ENDPOINT_URL, AWS_REGION_NAME
-from ResilienceAI.services import extract_info_via_api
+from ResilienceAI.services import extract_info_via_api, ask_chat_via_api
 
 from botocore.exceptions import ClientError
 
@@ -32,7 +32,7 @@ def manage(request):
         if request.user.role == 'Owner':
             owner = True
 
-    return render(request, 'cma/manage.html', {'group': users, 'owner': owner})
+    return render(request, 'cma/manage.html', {'group': users, 'owner': owner, 'mainUser':request.user})
 
 @login_required
 def add_to_group(request):
@@ -58,7 +58,7 @@ def add_to_group(request):
 @login_required
 def remove_from_group(request):
     userEmail = request.GET.get('user_email') or None
-    print(userEmail)
+
     if userEmail:
         user = get_object_or_404(CustomUser, email=userEmail)
   
@@ -75,6 +75,52 @@ def remove_from_group(request):
                 raise PermissionDenied
         else:
             raise PermissionDenied
+
+    return redirect('manage')
+
+@login_required
+def leave_group(request):
+    user = request.user
+
+    if user.group:
+        if user.role != 'Owner':
+            user.group = None
+            user.save()
+
+            user.role = None
+            user.save()
+        else:
+            raise PermissionDenied
+    else:
+        raise PermissionDenied
+
+    return redirect('manage')
+
+@login_required
+def delete_group(request):
+    user = request.user
+  
+    if user.group:
+        if request.user.role == 'Owner':
+            groupUsers = CustomUser.objects.filter(group=user.group)
+
+            for groupUser in groupUsers:
+                groupUser.group = None
+                groupUser.save()
+
+                groupUser.role = None
+                groupUser.save()
+
+            user.group = None
+            user.save()
+
+            user.role = None
+            user.save()
+
+        else:
+            raise PermissionDenied
+    else:
+        raise PermissionDenied
 
     return redirect('manage')
 
@@ -211,7 +257,6 @@ def download_file(request, file_id):
 
 
 @login_required
-
 def delete_file(request, file_id):
 
     file_obj = get_object_or_404(CMDoc, pk=file_id)
@@ -261,16 +306,44 @@ def view_all_chats(request):
 
 @login_required
 def view_chat(request, slug=None):
+    file_names = None
     chat_obj = None
+    chat_history = None
+
     if slug is not None:
         chat_obj = get_object_or_404(Chat, slug=slug)
 
         if chat_obj.user != request.user and chat_obj.user.group != request.user.group:
             raise PermissionDenied
+            
+        if request.method == 'POST':
+            question = request.POST.get('question_value') or None
+            local = request.POST.get('switch_value') == 'on'
+            result = ask_chat_via_api(question, chat_obj.chatData, local)
+            print(result)
+            answer = str(result.get('answer')).replace('\n', '')
+            question_answer_pair = f"Question: {question}\n Answer: {answer}\n"
+        
+            history = ''.join([str(chat_obj.chatData.get('history')), question_answer_pair])
 
-        data = chat_obj.chatData
+            file_names = chat_obj.chatData.get('file_names')
 
-    return render(request, 'cma/view_chat.html', {'chat': chat_obj})
+            data = {
+                "history": history,
+                "context": chat_obj.chatData.get('context'),
+                "file_names": file_names,
+            }
+
+            chat_obj.chatData = data
+            chat_obj.save()
+        else:
+            history = chat_obj.chatData.get('history')
+            file_names = chat_obj.chatData.get('file_names')
+        
+        if history:
+            chat_history = history.split("\n")
+
+    return render(request, 'cma/view_chat.html', {'chat': chat_obj, 'chat_history': chat_history, 'files_list': file_names})
 
 @login_required
 def delete_chat(request, slug=None):
@@ -285,6 +358,50 @@ def delete_chat(request, slug=None):
     return redirect('view_all_chats')
 
 @login_required
+def regen_context_chat(request, slug=None):
+
+    chat_obj = get_object_or_404(Chat, slug=slug)
+
+    if chat_obj.user != request.user:
+        raise PermissionDenied
+
+    files = []
+    file_names_list = []
+    context = None
+
+    if request.user.group:
+        users = CustomUser.objects.filter(group=request.user.group)
+        for user in users:
+            user_files = CMDoc.objects.filter(user=user)
+            files.extend(user_files)
+    else:
+        files = CMDoc.objects.filter(user=request.user)
+
+    for file_obj in files:
+        data = file_obj.extractData
+        text = data.get('text')
+        if text:
+            if context is None:
+                context = text
+            else:
+                context += " " + text
+            file_names_list.append(file_obj.fileName)
+
+    chatData = chat_obj.chatData
+    history = chatData.get('history')
+
+    chatData = {
+        "history": history,
+        "context": context,
+        "file_names": file_names_list,
+    }
+
+    chat_obj.chatData = chatData
+    chat_obj.save()
+
+    return redirect('view_chat', slug=slug)
+
+@login_required
 def new_chat(request):
     chat_name = request.GET.get('chat_name') or None
 
@@ -294,6 +411,37 @@ def new_chat(request):
             chatName=chat_name
         )
     
+        new_chat.save()
+
+        files = []
+        file_names_list = []
+        context = None
+
+        if request.user.group:
+            users = CustomUser.objects.filter(group=request.user.group)
+            for user in users:
+                user_files = CMDoc.objects.filter(user=user)
+                files.extend(user_files)
+        else:
+            files = CMDoc.objects.filter(user=request.user)
+
+        for file_obj in files:
+            data = file_obj.extractData
+            text = data.get('text')
+            if text:
+                if context is None:
+                    context = text
+                else:
+                    context += " " + text
+                file_names_list.append(file_obj.fileName)
+        
+        chatData = {
+            "history": "",
+            "context": context,
+            "file_names": file_names_list,
+        }
+
+        new_chat.chatData = chatData
         new_chat.save()
 
         return redirect('view_chat', slug=new_chat.slug)

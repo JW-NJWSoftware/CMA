@@ -4,16 +4,72 @@
 
 {% block content %}
 <div class="container">
-    <div class="container">
-        <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
-            <h2 class="display-1 mb-2">{{chat.chatName}}</h2>              
+    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{chat.chatName}}</p>
+    <div class="row">
+        <div class="col-md-9 ">
+                {% if chat_history %}
+                    {% for pair in chat_history %}
+                        {% if pair %}
+                            {% if "Question" in pair %}
+                                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+                                    <p class="small p-2 me-3 mb-3 text-white rounded-3 bg-warning">{{ pair|slice:"9:" }}</p>
+                                </div>
+                            {% elif "Answer" in pair %}
+                                <div class="d-flex flex-row justify-content-start">
+                                    <p class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">{{ pair|slice:"9:" }}</p>
+                                </div>
+                            {% else %}
+                                <p>{{ pair }}</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>No chat history available.</p>
+                {% endif %}
+            <form class="form-inline" action="" method="POST">
+                {% csrf_token %}
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <input class="form-control no-outline" type="text" placeholder="Ask a question" name="question_value" id="question_value">
+                    </div>
+                    <div class="col-md-2"> 
+                        <button class="btn-change bg-dark my-2 my-sm-0" type="submit">Ask</button>
+                    </div>
+                </div>
+                <label class="form-check-label" for="flexSwitchCheckChecked">Local file processing:</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="switch_value" {% if switch_checked %} checked {% endif %} />
+                </div> 
+            </form>  
         </div>
-    </div>
-    {% if chat.user == request.user %}
-    <form action="{{ chat.get_delete_url }}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-    </form>
-    {% endif %}
+        <div class="col-md-3">
+            <p class="lead">Context files:</p>
+            {% if files_list %}
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fileName in files_list %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ fileName }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>     
+            {% else %}
+                <p>No files available.</p>
+            {% endif %}     
+            <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-1 mt-sm-2 mt-lg-4">
+                <form action="{{ chat.get_regen_context_url }}">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Regenerate context" />
+                </form>
+            </div>             
+        </div>
+      </div>
 </div>
 {% endblock %}

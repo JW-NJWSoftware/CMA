@@ -52,4 +52,7 @@ class Chat(models.Model):
 
     def get_delete_url(self):
         return reverse("delete_chat", kwargs={"slug": self.slug})
+    
+    def get_regen_context_url(self):
+        return reverse("regen_context_chat", kwargs={"slug": self.slug})
 
