@@ -6,17 +6,34 @@
 <div class="container">
     <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
         <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">New File</p>
-        <form name="file" method="post" enctype="multipart/form-data">
+        <form name="file" method="post" enctype="multipart/form-data" id="fileUploadForm" onsubmit="showLoadingIndicator()">
             {% csrf_token %}
             {{ form.as_p }}
             <label class="form-check-label" for="flexSwitchCheckChecked">Local file processing:</label>
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="switch_value" {% if switch_checked %} checked {% endif %} />
-            </div>            
+            </div>        
             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                 <button type="submit" class="btn btn-primary btn-lg">Upload File</button>
+            </div>
+            <!-- Loading Indicator -->
+            <div id="loadingIndicator" class="d-none">
+                <div class="spinner-border text-primary justify-content-center d-flex" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading...</p>
             </div>
         </form>   
     </div>
 </div>
+
+<!-- JavaScript to show/hide loading indicator -->
+<script>
+    function showLoadingIndicator() {
+        document.getElementById("loadingIndicator").classList.remove("d-none");
+    }
+    function hideLoadingIndicator() {
+        document.getElementById("loadingIndicator").classList.add("d-none");
+    }
+</script>
 {% endblock %}

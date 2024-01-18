@@ -213,7 +213,16 @@ def view_file(request, slug=None):
         else:
             names_list = None
 
-    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary), 'names_list': names_list})
+        file_extension = file_obj.file.name.split('.')[-1].lower()
+
+        # Check if the file type is one that can be shown in an HTML iframe
+        allowed_view_file_types = ['pdf', 'html', 'txt', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'mp4'] #allowed file types
+        allowed_extracted_file_types = ['pdf', 'txt', 'doc', 'docx'] #allowed file types
+
+        allow_view = file_extension in allowed_view_file_types
+        allow_extracted_data = file_extension in allowed_extracted_file_types
+
+    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary), 'names_list': names_list, 'allow_view': allow_view, 'allow_extracted_data': allow_extracted_data})
 
 
 @login_required
@@ -330,30 +339,34 @@ def view_chat(request, slug=None):
             
         if request.method == 'POST':
             question = request.POST.get('question_value') or None
-            local = request.POST.get('switch_value') == 'on'
-            result = ask_chat_via_api(question, chat_obj.chatData, local)
-            answer = str(result.get('answer')).replace('\n', '')
-            question_answer_pair = f"Question: {question}\n Answer: {answer}\n"
-        
-            history = ''.join([str(chat_obj.chatData.get('history')), question_answer_pair])
+            if question is not None:
+                local = request.POST.get('switch_value') == 'on'
+                result = ask_chat_via_api(question, chat_obj.chatData, local)
+                answer = str(result.get('answer')).replace('\n', '')
+                question_answer_pair = f"Question: {question}\n Answer: {answer}\n"
+            
+                history = ''.join([str(chat_obj.chatData.get('history')), question_answer_pair])
 
-            file_ids = chat_obj.chatData.get('file_ids')
+                file_ids = chat_obj.chatData.get('file_ids')
 
-            data = {
-                "history": history,
-                "context": chat_obj.chatData.get('context'),
-                "file_ids": file_ids,
-            }
+                data = {
+                    "history": history,
+                    "context": chat_obj.chatData.get('context'),
+                    "file_ids": file_ids,
+                }
 
-            chat_obj.chatData = data
-            chat_obj.save()
+                chat_obj.chatData = data
+                chat_obj.save()
+            else:
+                history = chat_obj.chatData.get('history')
+                file_ids = chat_obj.chatData.get('file_ids')
         else:
             history = chat_obj.chatData.get('history')
             file_ids = chat_obj.chatData.get('file_ids')
         
         if history:
             chat_history = history.split("\n")
-
+    print(chat_history)
     return render(request, 'cma/view_chat.html', {'chat': chat_obj, 'chat_history': chat_history, 'file_ids': file_ids, 'all_file_data': all_file_data})
 
 @login_required

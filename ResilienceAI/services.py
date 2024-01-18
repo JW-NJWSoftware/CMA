@@ -53,7 +53,7 @@ def ask_chat_via_api(question: str = None, chat_data: Optional[Dict] = None, loc
         CMA_API_TOKEN_HEADER= os.environ.get("CMA_API_TOKEN_HEADER")
         CMA_API_ENDPOINT= os.environ.get("CMA_API_ENDPOINT")
 
-    CMA_API_ENDPOINT = ''.join([CMA_API_ENDPOINT,"/chat/"])
+    CMA_API_ENDPOINT = ''.join([CMA_API_ENDPOINT,"chat/"])
 
     data = {}
 

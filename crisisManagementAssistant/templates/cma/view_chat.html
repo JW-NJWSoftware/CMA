@@ -26,7 +26,7 @@
                 {% else %}
                     <p>No chat history available.</p>
                 {% endif %}
-            <form class="form-inline" action="" method="POST">
+            <form class="form-inline" action="" method="POST" id="questionForm" onsubmit="showLoadingIndicator()">
                 {% csrf_token %}
                 <div class="row justify-content-center">
                     <div class="col-md-6">
@@ -34,6 +34,15 @@
                     </div>
                     <div class="col-md-2"> 
                         <button class="btn-change bg-dark my-2 my-sm-0" type="submit">Ask</button>
+                    </div>
+                    <div class="col-md-2"> 
+                        <!-- Loading Indicator -->
+                        <div id="loadingIndicator" class="d-none">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading...</p>
+                        </div>
                     </div>
                 </div>
                 <label class="form-check-label" for="flexSwitchCheckChecked">Local file processing:</label>
@@ -77,4 +86,15 @@
         </div>
       </div>
 </div>
+
+<!-- JavaScript to show/hide loading indicator -->
+<script>
+    function showLoadingIndicator() {
+        document.getElementById("loadingIndicator").classList.remove("d-none");
+    }
+    function hideLoadingIndicator() {
+        document.getElementById("loadingIndicator").classList.add("d-none");
+    }
+</script>
+
 {% endblock %}
