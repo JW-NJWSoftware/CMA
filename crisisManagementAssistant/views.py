@@ -306,44 +306,55 @@ def view_all_chats(request):
 
 @login_required
 def view_chat(request, slug=None):
-    file_names = None
+    all_file_data = None
     chat_obj = None
     chat_history = None
+    file_ids = None
+    all_files = []
 
     if slug is not None:
         chat_obj = get_object_or_404(Chat, slug=slug)
 
         if chat_obj.user != request.user and chat_obj.user.group != request.user.group:
             raise PermissionDenied
+
+        if request.user.group:
+            users = CustomUser.objects.filter(group=request.user.group)
+            for user in users:
+                user_files = CMDoc.objects.filter(user=user)
+                all_files.extend(user_files)
+        else:
+            all_files = CMDoc.objects.filter(user=request.user)
+
+        all_file_data = [{'id': file_obj.id, 'name': file_obj.fileName} for file_obj in all_files]
             
         if request.method == 'POST':
             question = request.POST.get('question_value') or None
             local = request.POST.get('switch_value') == 'on'
             result = ask_chat_via_api(question, chat_obj.chatData, local)
-            print(result)
             answer = str(result.get('answer')).replace('\n', '')
             question_answer_pair = f"Question: {question}\n Answer: {answer}\n"
         
             history = ''.join([str(chat_obj.chatData.get('history')), question_answer_pair])
 
-            file_names = chat_obj.chatData.get('file_names')
+            file_ids = chat_obj.chatData.get('file_ids')
 
             data = {
                 "history": history,
                 "context": chat_obj.chatData.get('context'),
-                "file_names": file_names,
+                "file_ids": file_ids,
             }
 
             chat_obj.chatData = data
             chat_obj.save()
         else:
             history = chat_obj.chatData.get('history')
-            file_names = chat_obj.chatData.get('file_names')
+            file_ids = chat_obj.chatData.get('file_ids')
         
         if history:
             chat_history = history.split("\n")
 
-    return render(request, 'cma/view_chat.html', {'chat': chat_obj, 'chat_history': chat_history, 'files_list': file_names})
+    return render(request, 'cma/view_chat.html', {'chat': chat_obj, 'chat_history': chat_history, 'file_ids': file_ids, 'all_file_data': all_file_data})
 
 @login_required
 def delete_chat(request, slug=None):
@@ -364,40 +375,31 @@ def regen_context_chat(request, slug=None):
 
     if chat_obj.user != request.user:
         raise PermissionDenied
+        
+    if request.method == 'POST':
+        selected_files_ids = request.POST.getlist('selected_files')
+        selected_files = CMDoc.objects.filter(id__in=selected_files_ids)
+        
+        file_ids = []
+        context = ""
+        
+        for file_obj in selected_files:
+            data = file_obj.extractData
+            text = data.get('text')
+            if text:
+                context += f"{text} "
+                file_ids.append(file_obj.id)
 
-    files = []
-    file_names_list = []
-    context = None
+        chatData = {
+            "history": chat_obj.chatData.get('history'),
+            "context": context.strip(),
+            "file_ids": file_ids,
+        }
 
-    if request.user.group:
-        users = CustomUser.objects.filter(group=request.user.group)
-        for user in users:
-            user_files = CMDoc.objects.filter(user=user)
-            files.extend(user_files)
-    else:
-        files = CMDoc.objects.filter(user=request.user)
+        print(context.strip())
 
-    for file_obj in files:
-        data = file_obj.extractData
-        text = data.get('text')
-        if text:
-            if context is None:
-                context = text
-            else:
-                context += " " + text
-            file_names_list.append(file_obj.fileName)
-
-    chatData = chat_obj.chatData
-    history = chatData.get('history')
-
-    chatData = {
-        "history": history,
-        "context": context,
-        "file_names": file_names_list,
-    }
-
-    chat_obj.chatData = chatData
-    chat_obj.save()
+        chat_obj.chatData = chatData
+        chat_obj.save()
 
     return redirect('view_chat', slug=slug)
 
@@ -414,7 +416,7 @@ def new_chat(request):
         new_chat.save()
 
         files = []
-        file_names_list = []
+        file_ids = []
         context = None
 
         if request.user.group:
@@ -433,12 +435,12 @@ def new_chat(request):
                     context = text
                 else:
                     context += " " + text
-                file_names_list.append(file_obj.fileName)
+                file_ids.append(file_obj.id)
         
         chatData = {
             "history": "",
             "context": context,
-            "file_names": file_names_list,
+            "file_ids": file_ids,
         }
 
         new_chat.chatData = chatData

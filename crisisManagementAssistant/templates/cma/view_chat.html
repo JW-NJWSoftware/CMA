@@ -44,31 +44,36 @@
         </div>
         <div class="col-md-3">
             <p class="lead">Context files:</p>
-            {% if files_list %}
-                <table class="table table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for fileName in files_list %}
+            <form action="{{ chat.get_regen_context_url }}" method="post">
+                {% csrf_token %}
+                {% if all_file_data %}
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
                             <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td>{{ fileName }}</td>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Select</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>     
-            {% else %}
-                <p>No files available.</p>
-            {% endif %}     
-            <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-1 mt-sm-2 mt-lg-4">
-                <form action="{{ chat.get_regen_context_url }}">
+                        </thead>
+                        <tbody>
+                            {% for file in all_file_data  %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ file.name }}</td>
+                                    <td>
+                                        <input type="checkbox" name="selected_files" value="{{ file.id }}" {% if file.id in file_ids %}checked{% endif %}>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>     
+                {% else %}
+                    <p>No files available.</p>
+                {% endif %}     
+                <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-1 mt-sm-2 mt-lg-4">
                     <input type="submit" class="btn btn-primary btn-lg" value="Regenerate context" />
-                </form>
-            </div>             
+                </div>   
+            </form>      
         </div>
       </div>
 </div>
