@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
-from authentication.forms import UserCreateForm, AuthenticateForm, ProfileForm
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from authentication.forms import UserCreateForm, AuthenticateForm, ProfileForm, CustomPasswordChangeForm
 from authentication.models import CustomUser
 
 def login_view(request):
@@ -47,15 +47,28 @@ def register_view(request):
     return render(request, "auth/register.html", context)
 
 def profile_view(request):
+    user = request.user
     if request.method == "POST":
-        form = ProfileForm(request.POST or None, instance=request.user)
-        if form.is_valid():
-            user_obj = form.save()
-            messages.success(request, 'Account updated')
-        else:
-            # Add an error message if registration fails
-            messages.error(request, 'Update failed')
+        if "update_profile" in request.POST:
+            profile_form = ProfileForm(request.POST or None, instance=request.user)
+            if profile_form.is_valid():
+                user_obj = profile_form.save()
+                messages.success(request, 'Your account was successfully updated!')
+                return redirect('/auth/profile')
+            else:
+                messages.error(request, 'Update failed')
+                return redirect('/auth/profile')
+        elif "change_password" in request.POST:
+            password_form = CustomPasswordChangeForm(user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Your password was successfully updated!')
+                return redirect('/auth/profile')
+
     else:
-        form = ProfileForm()
-    context = {"form": form, "user": request.user}
+        profile_form = ProfileForm(instance=user)
+        password_form = CustomPasswordChangeForm(user)
+
+    context = {"profile_form": profile_form, "user": request.user, 'password_form': password_form}
     return render(request, "auth/profile.html", context)

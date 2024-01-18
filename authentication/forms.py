@@ -1,6 +1,6 @@
 from django import forms
 from .models import CustomUser
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 
 class UserCreateForm(UserCreationForm):
 
@@ -65,7 +65,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ("email", "first_name", "last_name")
+        fields = ('first_name', 'last_name', 'email')
         widgets = {
             'email': forms.fields.EmailInput(attrs={
                 'class': 'form-control form-control-lg',
@@ -83,3 +83,10 @@ class ProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    class Meta:
+        model = CustomUser
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
