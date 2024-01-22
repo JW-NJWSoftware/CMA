@@ -347,35 +347,40 @@ def view_chat(request, slug=None):
 
         all_file_data = [{'id': file_obj.id, 'name': file_obj.fileName} for file_obj in all_files]
             
+        history = chat_obj.chatData.get('history')
+        file_ids = chat_obj.chatData.get('file_ids')
+
         if request.method == 'POST':
+
             question = request.POST.get('question_value') or None
+
             if question is not None:
+
                 local = request.POST.get('switch_value') == 'on'
                 user_settings = request.user.settings
                 modelChoice = user_settings.get('modelChoice', "roberta-base-squad2") if user_settings else "roberta-base-squad2"
                 result = ask_chat_via_api(question, chat_obj.chatData, local, modelChoice)
-                answer = str(result.get('answer')).replace('\n', '')
-                answerContext = str(result.get('answerContext'))
-                question_answer_pair = f"Question: {question}\n Answer: {answer}\n Context: {answerContext}\n"
-            
-                history = ''.join([str(chat_obj.chatData.get('history')), question_answer_pair])
+                
+                if bool(result):
 
-                file_ids = chat_obj.chatData.get('file_ids')
+                    answer = str(result.get('answer')).replace('\n', '')
+                    answerContext = str(result.get('answerContext'))
+                    question_answer_pair = f"Question: {question}\n Answer: {answer}\n Context: {answerContext}\n"
+                
+                    history = ''.join([str(chat_obj.chatData.get('history')), question_answer_pair])
 
-                data = {
-                    "history": history,
-                    "context": chat_obj.chatData.get('context'),
-                    "file_ids": file_ids,
-                }
+                    file_ids = chat_obj.chatData.get('file_ids')
 
-                chat_obj.chatData = data
-                chat_obj.save()
-            else:
-                history = chat_obj.chatData.get('history')
-                file_ids = chat_obj.chatData.get('file_ids')
-        else:
-            history = chat_obj.chatData.get('history')
-            file_ids = chat_obj.chatData.get('file_ids')
+                    data = {
+                        "history": history,
+                        "context": chat_obj.chatData.get('context'),
+                        "file_ids": file_ids,
+                    }
+
+                    chat_obj.chatData = data
+                    chat_obj.save()
+                else:
+                    messages.error(request, 'Sorry, an issue occured during generation, please try again.')
         
         if history:
             chat_history = history.split("\n")

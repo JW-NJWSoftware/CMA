@@ -81,10 +81,14 @@ def ask_chat_via_api(question: str = None, chat_data: Optional[Dict] = None, loc
         "context":context,
     }
 
-    r = requests.post(CMA_API_ENDPOINT, json=requestData, headers=headers)
+    try:
+        r = requests.post(CMA_API_ENDPOINT, json=requestData, headers=headers)
 
-    if r.status_code in range(200, 299):
-        if r.headers.get("content-type") == 'application/json':
-            data = r.json()
+        if r.status_code in range(200, 299):
+            if r.headers.get("content-type") == 'application/json':
+                data = r.json()
 
-    return data
+        return data
+        
+    except requests.exceptions.RequestException as e:
+        return data
