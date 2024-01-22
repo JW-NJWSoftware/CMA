@@ -8,18 +8,22 @@
     <div class="row">
         <div class="col-md-9 ">
                 {% if chat_history %}
-                    {% for pair in chat_history %}
-                        {% if pair %}
-                            {% if "Question" in pair %}
+                    {% for tuple in chat_history %}
+                        {% if tuple %}
+                            {% if "Question" in tuple %}
                                 <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-                                    <p class="small p-2 me-3 mb-3 text-white rounded-3 bg-warning">{{ pair|slice:"9:" }}</p>
+                                    <p class="small p-2 me-3 mb-3 text-white rounded-3 bg-warning">{{ tuple|slice:"9:" }}</p>
                                 </div>
-                            {% elif "Answer" in pair %}
+                            {% elif "Answer" in tuple %}
                                 <div class="d-flex flex-row justify-content-start">
-                                    <p class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">{{ pair|slice:"9:" }}</p>
+                                    <p class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">{{ tuple|slice:"9:" }}</p>
+                                </div>
+                            {% elif "Context" in tuple %}
+                                <div class="d-flex flex-row justify-content-start">
+                                    <p class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">Justification: {{ tuple|slice:"9:" }}</p>
                                 </div>
                             {% else %}
-                                <p>{{ pair }}</p>
+                                <p>{{ tuple }}</p>
                             {% endif %}
                         {% endif %}
                     {% endfor %}

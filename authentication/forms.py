@@ -87,6 +87,10 @@ class ProfileForm(forms.ModelForm):
 class SettingsForm(forms.Form):
     chunk_size = forms.IntegerField()
     sentence_cut_percentage = forms.FloatField()
+    modelChoice = forms.ChoiceField(
+        choices=[('roberta-base-squad2', 'roberta-base-squad2'), ('bert-base-cased-squad2', 'bert-base-cased-squad2'), ('bert-large-uncased-whole-word-masking-finetuned-squad', 'bert-large-uncased-whole-word-masking-finetuned-squad'), ('ensemble', 'ensemble')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
 class CustomPasswordChangeForm(PasswordChangeForm):
     class Meta:

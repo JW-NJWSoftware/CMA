@@ -45,7 +45,7 @@ def extract_info_via_api(file_obj: File=None, local: bool = False, chunk_size: i
 
     return data
 
-def ask_chat_via_api(question: str = None, chat_data: Optional[Dict] = None, local: bool = False):
+def ask_chat_via_api(question: str = None, chat_data: Optional[Dict] = None, local: bool = False, modelChoice: str = ""):
     if local:
         CMA_API_TOKEN_HEADER= os.environ.get("CMA_API_TOKEN_HEADER_LOCAL")
         CMA_API_ENDPOINT= os.environ.get("CMA_API_ENDPOINT_LOCAL")
@@ -67,7 +67,8 @@ def ask_chat_via_api(question: str = None, chat_data: Optional[Dict] = None, loc
         return data
 
     headers = {
-        "Authorization": f"Bearer {CMA_API_TOKEN_HEADER}"
+        "Authorization": f"Bearer {CMA_API_TOKEN_HEADER}",
+        "modelChoice": modelChoice,
     }
 
     history = chat_data.get('history')

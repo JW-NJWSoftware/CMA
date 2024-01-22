@@ -25,6 +25,16 @@
                         <input type="range" class="form-control" step="1" name="sentence_cut_percentage" id="id_sentence_cut_percentage" value="{{ settings_form.sentence_cut_percentage.value }}" min="0" max="75" oninput="updateValue('sentenceCutValue', this.value)">
                     </div>
                 </div>
+                <div class="row mb-3 justify-content-center">
+                    <div class="col-md-6">
+                        <label for="id_modelChoice" class="form-label">Model Choice:</label>
+                        <select class="form-control" name="modelChoice" id="id_modelChoice">
+                            {% for value, label in settings_form.fields.modelChoice.choices %}
+                                <option value="{{ value }}" {% if settings_form.modelChoice.value == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
                 {% csrf_token %}
                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button type="submit" class="btn btn-primary btn-lg" name="update_settings">Save settings</button>

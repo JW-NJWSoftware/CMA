@@ -323,6 +323,7 @@ def view_chat(request, slug=None):
     chat_obj = None
     chat_history = None
     file_ids = None
+    allowed_file_extensions = ['pdf', 'txt', 'doc', 'docx']
     all_files = []
 
     if slug is not None:
@@ -335,9 +336,14 @@ def view_chat(request, slug=None):
             users = CustomUser.objects.filter(group=request.user.group)
             for user in users:
                 user_files = CMDoc.objects.filter(user=user)
-                all_files.extend(user_files)
+                for file_obj in user_files:
+                    if any(file_obj.file.name.split('.')[-1].lower() for ext in allowed_file_extensions):
+                        all_files.append(file_obj)
         else:
-            all_files = CMDoc.objects.filter(user=request.user)
+            user_files = CMDoc.objects.filter(user=request.user)
+            for file_obj in user_files:
+                if any(file_obj.file.name.lower().endswith(ext) for ext in allowed_file_extensions):
+                    all_files.append(file_obj)
 
         all_file_data = [{'id': file_obj.id, 'name': file_obj.fileName} for file_obj in all_files]
             
@@ -345,9 +351,12 @@ def view_chat(request, slug=None):
             question = request.POST.get('question_value') or None
             if question is not None:
                 local = request.POST.get('switch_value') == 'on'
-                result = ask_chat_via_api(question, chat_obj.chatData, local)
+                user_settings = request.user.settings
+                modelChoice = user_settings.get('modelChoice', "roberta-base-squad2") if user_settings else "roberta-base-squad2"
+                result = ask_chat_via_api(question, chat_obj.chatData, local, modelChoice)
                 answer = str(result.get('answer')).replace('\n', '')
-                question_answer_pair = f"Question: {question}\n Answer: {answer}\n"
+                answerContext = str(result.get('answerContext'))
+                question_answer_pair = f"Question: {question}\n Answer: {answer}\n Context: {answerContext}\n"
             
                 history = ''.join([str(chat_obj.chatData.get('history')), question_answer_pair])
 
@@ -412,8 +421,6 @@ def regen_context_chat(request, slug=None):
             "context": context.strip(),
             "file_ids": file_ids,
         }
-
-        print(context.strip())
 
         chat_obj.chatData = chatData
         chat_obj.save()
