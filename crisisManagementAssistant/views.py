@@ -325,6 +325,7 @@ def view_chat(request, slug=None):
     file_ids = None
     allowed_file_extensions = ['pdf', 'txt', 'doc', 'docx']
     all_files = []
+    all_user_files = []
 
     if slug is not None:
         chat_obj = get_object_or_404(Chat, slug=slug)
@@ -336,9 +337,11 @@ def view_chat(request, slug=None):
             users = CustomUser.objects.filter(group=request.user.group)
             for user in users:
                 user_files = CMDoc.objects.filter(user=user)
-                for file_obj in user_files:
-                    if any(file_obj.file.name.split('.')[-1].lower() for ext in allowed_file_extensions):
-                        all_files.append(file_obj)
+                all_user_files.extend(user_files)
+
+            for file_obj in all_user_files:
+                if any(file_obj.file.name.lower().endswith(ext) for ext in allowed_file_extensions):
+                    all_files.append(file_obj)
         else:
             user_files = CMDoc.objects.filter(user=request.user)
             for file_obj in user_files:
