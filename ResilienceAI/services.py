@@ -7,7 +7,7 @@ from django.core.files import File
 CMA_API_TOKEN_HEADER= None
 CMA_API_ENDPOINT= None
 
-def extract_info_via_api(file_obj: File=None, local: bool = False):
+def extract_info_via_api(file_obj: File=None, local: bool = False, chunk_size: int = 1000, sentence_cut_percentage: float = 25):
     if local:
         CMA_API_TOKEN_HEADER= os.environ.get("CMA_API_TOKEN_HEADER_LOCAL")
         CMA_API_ENDPOINT= os.environ.get("CMA_API_ENDPOINT_LOCAL")
@@ -32,11 +32,11 @@ def extract_info_via_api(file_obj: File=None, local: bool = False):
 
     if file_extension not in allowed_extensions:
         return data
-
     headers = {
-        "Authorization": f"Bearer {CMA_API_TOKEN_HEADER}"
+        "Authorization": f"Bearer {CMA_API_TOKEN_HEADER}",
+        "Chunk-Size": str(chunk_size),
+        "Sentence-Cut-Percentage": str(sentence_cut_percentage)
         }
-
     with file_obj.open('rb') as f:
         r = requests.post(CMA_API_ENDPOINT, files={"file": f}, headers=headers)
         if r.status_code in range(200, 299):

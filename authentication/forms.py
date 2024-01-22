@@ -84,6 +84,10 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
 
+class SettingsForm(forms.Form):
+    chunk_size = forms.IntegerField()
+    sentence_cut_percentage = forms.FloatField()
+
 class CustomPasswordChangeForm(PasswordChangeForm):
     class Meta:
         model = CustomUser

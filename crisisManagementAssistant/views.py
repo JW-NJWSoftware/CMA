@@ -176,8 +176,12 @@ def upload_file(request):
             obj = form.save(commit = False)
             obj.user=request.user   
             obj.save()
+
+            user_settings = request.user.settings
+            chunk_size = user_settings.get('chunk_size', 1000) if user_settings else 1000
+            sentence_cut_percentage = user_settings.get('sentence_cut_percentage', 25.0) if user_settings else 25.0
             
-            extracted = extract_info_via_api(obj.file, local)
+            extracted = extract_info_via_api(obj.file, local, chunk_size, sentence_cut_percentage)
             obj.extractData = extracted
 
             obj.save()
@@ -366,7 +370,7 @@ def view_chat(request, slug=None):
         
         if history:
             chat_history = history.split("\n")
-    print(chat_history)
+
     return render(request, 'cma/view_chat.html', {'chat': chat_obj, 'chat_history': chat_history, 'file_ids': file_ids, 'all_file_data': all_file_data})
 
 @login_required

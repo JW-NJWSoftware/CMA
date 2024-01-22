@@ -1,0 +1,45 @@
+{% extends 'base-body.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <p class="text-center h1 fw-bold mb-1 mx-1 mx-md-4 mt-4">Settings</p>
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    <div class="container">
+        <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
+            <h3 class="mb-3">Accessibility Settings:</h3>
+            <h3 class="mb-3">Advanced Settings:</h3>
+            <form method="post">
+                <div class="row mb-3 justify-content-center">
+                    <div class="col-md-6">
+                        <label for="id_chunk_size" class="form-label">Chunk Size: <span id="chunkSizeValue">{{ settings_form.chunk_size.value }}</span></label>
+                        <input type="range" class="form-control" step="10" name="chunk_size" id="id_chunk_size" value="{{ settings_form.chunk_size.value }}" min="500" max="2000" oninput="updateValue('chunkSizeValue', this.value)">
+                    </div>
+                </div>
+                <div class="row mb-3 justify-content-center">
+                    <div class="col-md-6">
+                        <label for="id_sentence_cut_percentage" class="form-label">Sentence Cut Percentage: <span id="sentenceCutValue">{{ settings_form.sentence_cut_percentage.value }}</span>%</label>
+                        <input type="range" class="form-control" step="1" name="sentence_cut_percentage" id="id_sentence_cut_percentage" value="{{ settings_form.sentence_cut_percentage.value }}" min="0" max="75" oninput="updateValue('sentenceCutValue', this.value)">
+                    </div>
+                </div>
+                {% csrf_token %}
+                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="submit" class="btn btn-primary btn-lg" name="update_settings">Save settings</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function updateValue(elementId, newValue) {
+        document.getElementById(elementId).innerText = newValue;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateValue('chunkSizeValue', document.getElementById('id_chunk_size').value);
+        updateValue('sentenceCutValue', document.getElementById('id_sentence_cut_percentage').value);
+    });
+</script>
+{% endblock %}

@@ -7,6 +7,7 @@ class CustomUser(AbstractUser):
     group = models.TextField(blank=True, null=True)
     timeStamp = models.DateTimeField(auto_now=True)
     role = models.TextField(blank=True, null=True)
+    settings = models.JSONField(default=dict, blank=True, null=True)
 
     class Meta:
         ordering = ('id',)

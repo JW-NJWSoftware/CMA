@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
-from authentication.forms import UserCreateForm, AuthenticateForm, ProfileForm, CustomPasswordChangeForm
+from authentication.forms import UserCreateForm, AuthenticateForm, ProfileForm, CustomPasswordChangeForm, SettingsForm
 from authentication.models import CustomUser
 
 def login_view(request):
@@ -72,3 +72,28 @@ def profile_view(request):
 
     context = {"profile_form": profile_form, "user": request.user, 'password_form': password_form}
     return render(request, "auth/profile.html", context)
+
+def settings_view(request):
+    user = request.user
+    if request.method == "POST":
+        settings_form = SettingsForm(request.POST or None)
+        if settings_form.is_valid():
+            user.settings = {
+                'chunk_size': settings_form.cleaned_data['chunk_size'],
+                'sentence_cut_percentage': settings_form.cleaned_data['sentence_cut_percentage']
+            }
+            user.save()
+            messages.success(request, 'Your settings were successfully updated!')
+            return redirect('/auth/settings')
+        else:
+            messages.error(request, 'Update failed')
+            return redirect('/auth/settings')
+    else:
+        initial_data = {
+            'chunk_size': user.settings.get('chunk_size', 1000) if user.settings else 1000,
+            'sentence_cut_percentage': user.settings.get('sentence_cut_percentage', 25.0) if user.settings else 25.0,
+        }
+        settings_form = SettingsForm(initial=initial_data)
+
+    context = {"settings_form": settings_form, "user": request.user}
+    return render(request, "auth/settings.html", context)
