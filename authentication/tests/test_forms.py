@@ -14,19 +14,74 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         self.assertTrue(form.is_valid())
         user = form.save()
         self.assertEqual(user.username, 'testuser')
-
-    def test_user_create_form_invalid(self):
-        # Test with invalid data, expect form not to be valid
+    
+    def test_user_create_form_invalid_tos(self):
+        form_data = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+            'ToS': False,
+        }
+        form = UserCreateForm(data=form_data)
+        self.assertFalse(form.is_valid())
+    
+    def test_user_create_form_invalid_username(self):
         form_data = {
             'username': '',
+            'email': 'testuser@example.com',
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+            'ToS': True,
+        }
+        form = UserCreateForm(data=form_data)
+        self.assertFalse(form.is_valid())
+    
+    def test_user_create_form_invalid_passwords(self):
+        form_data = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'password1': 'testpassword123',
+            'password2': 'wrongpassword',
+            'ToS': True,
+        }
+        form = UserCreateForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+        form_data2 = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'password1': 'wrongpassword',
+            'password2': 'testpassword123',
+            'ToS': True,
+        }
+        form2 = UserCreateForm(data=form_data2)
+        self.assertFalse(form2.is_valid())
+
+    def test_user_create_form_invalid_email(self):
+        # Test with invalid data, expect form not to be valid
+        form_data = {
+            'username': 'testuser',
             'email': 'invalidemail',
+            'first_name': 'John',
+            'last_name': 'Doe',
             'password1': 'password',
             'password2': 'differentpassword',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         self.assertFalse(form.is_valid())
@@ -39,6 +94,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save()
@@ -59,6 +115,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save()
@@ -85,6 +142,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save()
@@ -106,6 +164,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save()
@@ -127,6 +186,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save()
@@ -146,6 +206,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save()
@@ -185,6 +246,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save(commit=False)
@@ -207,6 +269,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save(commit=False)
@@ -227,6 +290,7 @@ class UserFormsTest(TestCase):
             'last_name': 'Doe',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
+            'ToS': True,
         }
         form = UserCreateForm(data=form_data)
         user = form.save(commit=False)

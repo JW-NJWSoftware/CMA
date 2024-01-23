@@ -3,10 +3,14 @@ from .models import CustomUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 
 class UserCreateForm(UserCreationForm):
+    ToS = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+    )
 
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "first_name", "last_name", "password1", "password2")
+        fields = ("username", "email", "first_name", "last_name", "password1", "password2", "ToS")
         widgets = {
             'username': forms.fields.TextInput(attrs={
                 'class': 'form-control form-control-lg',

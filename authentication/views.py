@@ -35,11 +35,13 @@ def register_view(request):
     if request.method == "POST":
         form = UserCreateForm(request.POST or None)
         if form.is_valid():
-            user_obj = form.save()
-            messages.success(request, 'Account created successfully')
-            return redirect('/auth/login')
+            if form.cleaned_data['ToS']:
+                user_obj = form.save()
+                messages.success(request, 'Account created successfully')
+                return redirect('/auth/login')
+            else:
+                messages.error(request, 'Please agree to the Terms of Service.')
         else:
-            # Add an error message if registration fails
             messages.error(request, 'Invalid registration details')
     else:
         form = UserCreateForm()

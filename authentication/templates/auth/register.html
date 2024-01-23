@@ -9,7 +9,7 @@
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">{{ message }}</div>
             {% endfor %}
-            <form method="post">
+            <form method="post" id="registration_form">
                 {% csrf_token %}
                 <div class="form-outline mb-4 border rounded" >
                     <input class="form-control" type="text" id="username" name="username">
@@ -60,9 +60,9 @@
                 </ul>
 
                 <div class="form-check d-flex justify-content-center mb-4">
-                    <input class="me-2" type="checkbox" value="" id="ToS" />
-                    <label class="form-check-label" for="ToS">
-                    I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                    {{ form.ToS }}
+                    <label class="form-check-label" for="{{ form.ToS.id_for_label }}">
+                        I agree to all statements in <a href='{% static "documents/Terms of Service.txt"%}' class="text-body" target="_blank"><u>Terms of service</u></a>
                     </label>
                 </div>
 
