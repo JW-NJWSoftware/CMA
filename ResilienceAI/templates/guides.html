@@ -3,6 +3,29 @@
 {% load static %}
 
 {% block content %}
+<style>
+  section {
+    margin-bottom: 40px;
+  }
+  h2 {
+    color: #333;
+  }
+  p {
+    color: #666;
+  }
+  img {
+    max-width: 80%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: brightness(150%); 
+  }
+</style>
 <div class="container">
    <h1>Application User Guide</h1>
 
@@ -10,12 +33,17 @@
   <section>
     <h2>Files</h2>
     <p>
-      Welcome to the Files section, where you can manage your crisis management documents with ease. To get started, click on the "Upload" button to add your document. Our server will then carry out preprocessing to extract a summary and critical information, such as names, from the file.
+      Welcome to the Files section, where you can manage your crisis management documents with ease. 
     </p>
-    <img src="files_upload_screenshot.png" alt="Files Upload Screenshot">
+    <img src='{% static "images/CMA - AllFiles - screenshot.png"%}' alt="All Files Screenshot">
+    <p>
+      To get started, click on the "Upload" button to add your document. Our server will then carry out preprocessing to extract a summary and critical information, such as names, from the file.
+    </p>
+    <img src='{% static "images/CMA - uploadFile - screenshot.png"%}' alt="Upload File Screenshot">
     <p>
       Once your file has been processed, you can view it online in its raw format or with the extracted and user-entered data. Take advantage of the "Download" button to save the file for later use and share it effortlessly with your colleagues.
     </p>
+    <img src='{% static "images/CMA - viewFile - screenshot.png"%}' alt="View File Screenshot">
   </section>
 
   <!-- Chats Section -->
@@ -24,7 +52,7 @@
     <p>
       In the Chats section, you can create and manage conversations seamlessly. When you create a chat, context is automatically generated from the text files you've uploaded. Feel free to regenerate the context at any time to update the files the chat bot examines and improve the conversation's accuracy.
     </p>
-    <img src="chats_create_screenshot.png" alt="Chats Create Screenshot">
+    <img src='{% static "images/CMA - allChats - screenshot.png"%}' alt="All Chats Screenshot">
     <p>
       Remember, the chat history is visible to the bot, allowing you to ask questions and receive answers with justification and evidence provided by the reference in the context used for the answer. It serves as a robust instrument for collaborative issue resolution and knowledge dissemination, fostering an environment where access to pertinent information is streamlined for optimal efficiency.
     </p>
@@ -36,7 +64,7 @@
     <p>
       Explore the Manage section to enhance collaboration within groups. Users can either create a group or be added to an existing group by the owner. Once you're part of a group, you'll have access to all files and chats of every member, fostering seamless information sharing.
     </p>
-    <img src="manage_groups_screenshot.png" alt="Manage Groups Screenshot">
+    <img src='{% static "images/CMA - groups - screenshot.png"%}'  alt="Groups Screenshot">
     <p>
       Keep in mind that only the file owner can delete their own files, ensuring secure collaboration. When generating context for chats, the application utilizes files from the wider group, promoting a comprehensive and well-informed discussion environment.
     </p>
