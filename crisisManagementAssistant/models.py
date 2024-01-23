@@ -8,7 +8,7 @@ from ResilienceAI.utils import unique_slugify
 class CMDoc(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE)
     fileName = models.CharField(default="", max_length=120)
-    desc = models.TextField(default="")
+    desc = models.TextField(default="", blank=True, null=True)
     slug = models.SlugField(max_length=50, blank=True, null=True)
     file = models.FileField(upload_to='cmdocs/', default="")
     timestamp = models.DateTimeField(auto_now=True)
