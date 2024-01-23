@@ -15,24 +15,30 @@
             <form method="post">
                 <div class="row mb-3 justify-content-center">
                     <div class="col-md-6">
-                        <label for="id_chunk_size" class="form-label">Chunk Size: <span id="chunkSizeValue">{{ settings_form.chunk_size.value }}</span></label>
-                        <input type="range" class="form-control" step="10" name="chunk_size" id="id_chunk_size" value="{{ settings_form.chunk_size.value }}" min="500" max="2000" oninput="updateValue('chunkSizeValue', this.value)">
+                        <div data-bs-toggle="tooltip" data-bs-placement="left" title="This setting will increase processing time for file uploads the higher it is set." data-bs-delay="1000">
+                            <label for="id_chunk_size" class="form-label">Chunk Size: <span id="chunkSizeValue">{{ settings_form.chunk_size.value }}</span></label>
+                            <input type="range" class="form-control" step="10" name="chunk_size" id="id_chunk_size" value="{{ settings_form.chunk_size.value }}" min="500" max="2000" oninput="updateValue('chunkSizeValue', this.value)">
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3 justify-content-center">
                     <div class="col-md-6">
-                        <label for="id_sentence_cut_percentage" class="form-label">Sentence Cut Percentage: <span id="sentenceCutValue">{{ settings_form.sentence_cut_percentage.value }}</span>%</label>
-                        <input type="range" class="form-control" step="1" name="sentence_cut_percentage" id="id_sentence_cut_percentage" value="{{ settings_form.sentence_cut_percentage.value }}" min="0" max="75" oninput="updateValue('sentenceCutValue', this.value)">
+                        <div data-bs-toggle="tooltip" data-bs-placement="left" title="This setting will increase processing time for file uploads the lower it is set. The more sentences you cut the lower the coverage of the summary over the full document." data-bs-delay="1000">
+                            <label for="id_sentence_cut_percentage" class="form-label">Sentence Cut Percentage: <span id="sentenceCutValue">{{ settings_form.sentence_cut_percentage.value }}</span>%</label>
+                            <input type="range" class="form-control" step="1" name="sentence_cut_percentage" id="id_sentence_cut_percentage" value="{{ settings_form.sentence_cut_percentage.value }}" min="0" max="75" oninput="updateValue('sentenceCutValue', this.value)">
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3 justify-content-center">
                     <div class="col-md-6">
-                        <label for="id_modelChoice" class="form-label">Model Choice:</label>
-                        <select class="form-control" name="modelChoice" id="id_modelChoice">
-                            {% for value, label in settings_form.fields.modelChoice.choices %}
-                                <option value="{{ value }}" {% if settings_form.modelChoice.value == value %}selected{% endif %}>{{ label }}</option>
-                            {% endfor %}
-                        </select>
+                        <div data-bs-toggle="tooltip" data-bs-placement="left" title="Each model has similar processing time. An ENSEMBLE of all the models will drastically increase chat response time but may provide mor accurate responses." data-bs-delay="1000">
+                            <label for="id_modelChoice" class="form-label">Chat AI Model Choice:</label>
+                            <select class="form-control" name="modelChoice" id="id_modelChoice">
+                                {% for value, label in settings_form.fields.modelChoice.choices %}
+                                    <option value="{{ value }}" {% if settings_form.modelChoice.value == value %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
                 </div>
                 {% csrf_token %}
@@ -50,6 +56,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         updateValue('chunkSizeValue', document.getElementById('id_chunk_size').value);
         updateValue('sentenceCutValue', document.getElementById('id_sentence_cut_percentage').value);
+    });
+
+    // Activate Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
     });
 </script>
 {% endblock %}

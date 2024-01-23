@@ -52,10 +52,12 @@
                         </div>
                     </div>
                 </div>
-                <label class="form-check-label" for="flexSwitchCheckChecked">Local file processing:</label>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="switch_value" {% if switch_checked %} checked {% endif %} />
-                </div> 
+                <div data-bs-toggle="tooltip" data-bs-placement="left" title="If you have the required AI models executing on your local machine activate this setting." data-bs-delay="1000">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Local file processing:</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="switch_value" {% if switch_checked %} checked {% endif %} />
+                    </div> 
+                </div>
             </form>  
         </div>
         <div class="col-md-3">
@@ -102,6 +104,11 @@
     function hideLoadingIndicator() {
         document.getElementById("loadingIndicator").classList.add("d-none");
     }
+    // Activate Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
 </script>
 
 {% endblock %}

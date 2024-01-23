@@ -9,10 +9,12 @@
         <form name="file" method="post" enctype="multipart/form-data" id="fileUploadForm" onsubmit="showLoadingIndicator()">
             {% csrf_token %}
             {{ form.as_p }}
-            <label class="form-check-label" for="flexSwitchCheckChecked">Local file processing:</label>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="switch_value" {% if switch_checked %} checked {% endif %} />
-            </div>        
+            <div data-bs-toggle="tooltip" data-bs-placement="left" title="If you have the required AI models executing on your local machine activate this setting." data-bs-delay="1000">
+                <label class="form-check-label" for="flexSwitchCheckChecked">Local file processing:</label>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="switch_value" {% if switch_checked %} checked {% endif %} />
+                </div>     
+            </div>     
             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                 <button type="submit" class="btn btn-primary btn-lg">Upload File</button>
             </div>
@@ -35,5 +37,10 @@
     function hideLoadingIndicator() {
         document.getElementById("loadingIndicator").classList.add("d-none");
     }
+    // Activate Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
 </script>
 {% endblock %}
