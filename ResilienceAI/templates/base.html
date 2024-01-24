@@ -17,4 +17,11 @@
     </head>
     {% block body %}
     {% endblock %}
+    <script>
+        // Check if user is authenticated and set font size accordingly
+        document.addEventListener('DOMContentLoaded', function() {
+            var fontSize = '{% if request.user.is_authenticated %}{{ request.user.settings.font_size|default:16 }}px{% else %}16px{% endif %}';
+            document.body.style.fontSize = fontSize;
+        });
+    </script>
 </html>

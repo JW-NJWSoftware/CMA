@@ -10,9 +10,17 @@
     {% endfor %}
     <div class="container">
         <div class="row justify-content-center p-5 bg-body-tertiary rounded-3">
-            <h3 class="mb-3">Accessibility Settings:</h3>
-            <h3 class="mb-3">Advanced Settings:</h3>
             <form method="post">
+                <h3 class="mb-3">Accessibility Settings:</h3>
+                <div class="row mb-3 justify-content-center">
+                    <div class="col-md-6">
+                        <div data-bs-toggle="tooltip" data-bs-placement="left" title="This setting will increase text size to support visually impaired users." data-bs-delay="1000">
+                            <label for="id_font_size" class="form-label">Font Size: <span id="fontSizeValue">{{ settings_form.font_size.value }}</span></label>
+                            <input type="range" class="form-control" step="1" name="font_size" id="id_font_size" value="{{ settings_form.font_size.value }}" min="8" max="32" oninput="updateValue('fontSizeValue', this.value)">
+                        </div>
+                    </div>
+                </div>
+                <h3 class="mb-3">Advanced Settings:</h3>
                 <div class="row mb-3 justify-content-center">
                     <div class="col-md-6">
                         <div data-bs-toggle="tooltip" data-bs-placement="left" title="This setting will increase processing time for file uploads the higher it is set." data-bs-delay="1000">
@@ -54,6 +62,7 @@
         document.getElementById(elementId).innerText = newValue;
     }
     document.addEventListener('DOMContentLoaded', function() {
+        updateValue('fontSizeValue', document.getElementById('id_font_size').value);
         updateValue('chunkSizeValue', document.getElementById('id_chunk_size').value);
         updateValue('sentenceCutValue', document.getElementById('id_sentence_cut_percentage').value);
     });

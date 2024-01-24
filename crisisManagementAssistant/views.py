@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, StreamingHttpResponse
 from django.shortcuts import get_object_or_404
 
 from crisisManagementAssistant.models import CMDoc, Chat
@@ -220,7 +220,7 @@ def view_file(request, slug=None):
         file_extension = file_obj.file.name.split('.')[-1].lower()
 
         # Check if the file type is one that can be shown in an HTML iframe
-        allowed_view_file_types = ['pdf', 'html', 'txt', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'mp4'] #allowed file types
+        allowed_view_file_types = ['pdf', 'html', 'txt', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'xls', 'xlsx', 'ppt', 'pptx', 'mp4'] #allowed file types
         allowed_extracted_file_types = ['pdf', 'txt', 'doc', 'docx'] #allowed file types
 
         allow_view = file_extension in allowed_view_file_types

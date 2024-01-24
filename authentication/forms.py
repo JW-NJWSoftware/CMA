@@ -89,6 +89,7 @@ class ProfileForm(forms.ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
 
 class SettingsForm(forms.Form):
+    font_size = forms.IntegerField()
     chunk_size = forms.IntegerField()
     sentence_cut_percentage = forms.FloatField()
     modelChoice = forms.ChoiceField(

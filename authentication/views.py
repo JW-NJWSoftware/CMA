@@ -81,6 +81,7 @@ def settings_view(request):
         settings_form = SettingsForm(request.POST or None)
         if settings_form.is_valid():
             user.settings = {
+                'font_size': settings_form.cleaned_data['font_size'],
                 'chunk_size': settings_form.cleaned_data['chunk_size'],
                 'sentence_cut_percentage': settings_form.cleaned_data['sentence_cut_percentage'],
                 'modelChoice': settings_form.cleaned_data['modelChoice']
@@ -93,6 +94,7 @@ def settings_view(request):
             return redirect('/auth/settings')
     else:
         initial_data = {
+            'font_size': user.settings.get('font_size', 16) if user.settings else 16,
             'chunk_size': user.settings.get('chunk_size', 1000) if user.settings else 1000,
             'sentence_cut_percentage': user.settings.get('sentence_cut_percentage', 25.0) if user.settings else 25.0,
             'modelChoice': user.settings.get('modelChoice', 'roberta-base-squad2') if user.settings else 'roberta-base-squad2',
