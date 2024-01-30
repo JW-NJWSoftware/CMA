@@ -19,20 +19,42 @@ from botocore.exceptions import ClientError
 
 import boto3, requests
 
-
 @login_required
 def manage(request):
     group = request.user.group
+    role = request.user.role
     users = {}
     owner = False
+    role_response = None
     
-    if group:
-        users = CustomUser.objects.filter(group=group)
+    if request.method == 'POST':
+        user = request.user
+        role_response = request.POST.get('role_response')
 
-        if request.user.role == 'Owner':
-            owner = True
+        if role_response == 'accept':
+            if user.group is None:
+                user.group = role
+                user.save()
+                user.role = 'Member'
+                user.save()
+                messages.success(request, f'You have accepted the invitation to the "{role}" group.')
+                return redirect('manage')
+            else:
+                messages.warning(request, "Sorry, an issue has occured. Please try again.")
+                return redirect('manage')
+        elif role_response == 'decline':
+            user.role = None
+            user.save()
+            messages.warning(request, f'You have declined the invitation to the "{role}" group.')
+            return redirect('manage')
+    else:
+        if group:
+            users = CustomUser.objects.filter(group=group)
 
-    return render(request, 'cma/manage.html', {'group': users, 'owner': owner, 'mainUser':request.user})
+            if request.user.role == 'Owner':
+                owner = True
+
+    return render(request, 'cma/manage.html', {'role': role, 'group': users, 'owner': owner, 'mainUser':request.user})
 
 @login_required
 def add_to_group(request):
@@ -42,16 +64,16 @@ def add_to_group(request):
         user = get_object_or_404(CustomUser, email=userEmail)
         
         if user.group is None:
-            user.group = request.user.group
-            user.save()
-            user.role = 'Member'
-            user.save()
-            messages.success(request, 'User added to group')
-
+            if user.role is None:
+                user.role = request.user.group
+                user.save()
+                messages.success(request, 'User invited to group')
+            else:
+                messages.warning(request, 'User is already invited to a group')
         else:
-            messages.error(request, 'User is already in a group')
+            messages.warning(request, 'User is already in a group')
     else:
-        messages.error(request, 'User not found')
+        messages.warning(request, 'User not found')
 
     return redirect('manage')
 
@@ -133,7 +155,6 @@ def new_group(request):
         
         if user.group is None:
             existingGroup = CustomUser.objects.filter(group=group_name)
-            #print(existingGroup)
             if not existingGroup:
                 user.group = group_name
                 user.save()
@@ -141,11 +162,11 @@ def new_group(request):
                 user.role = 'Owner'
                 user.save()
             else:
-                messages.error(request, 'Group already exists')
+                messages.warning(request, 'Group already exists')
         else:
-            messages.error(request, 'User already in group')
+            messages.warning(request, 'User already in group')
     else:
-        messages.error(request, 'Please enter a group name')
+        messages.warning(request, 'Please enter a group name')
 
     return redirect('manage')
 
@@ -294,7 +315,7 @@ def delete_file(request, file_id):
 
     except ClientError as e:
         # Handle any exceptions or errors
-        messages.error(request, 'An error has occured. Please try again.')
+        messages.warning(request, 'An error has occured. Please try again.')
 
         return redirect('view_all_files')
 
@@ -383,7 +404,7 @@ def view_chat(request, slug=None):
                     chat_obj.chatData = data
                     chat_obj.save()
                 else:
-                    messages.error(request, 'Sorry, an issue occured during generation, please try again.')
+                    messages.warning(request, 'Sorry, an issue occured during generation, please try again.')
         
         if history:
             chat_history = history.split("\n")
@@ -407,7 +428,7 @@ def regen_context_chat(request, slug=None):
 
     chat_obj = get_object_or_404(Chat, slug=slug)
 
-    if chat_obj.user != request.user:
+    if chat_obj.user != request.user and chat_obj.user.group != request.user.group:
         raise PermissionDenied
         
     if request.method == 'POST':
@@ -481,5 +502,5 @@ def new_chat(request):
         return redirect('view_chat', slug=new_chat.slug)
 
     else:
-        messages.ERROR(request, 'No chat name provided')
+        messages.warning(request, 'No chat name provided')
         return redirect('view_all_chats')

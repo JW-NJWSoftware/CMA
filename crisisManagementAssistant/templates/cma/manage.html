@@ -10,91 +10,100 @@
     {% endfor %}
     <ul>
         {% if group %}
-        <div class="row mb-3">
-            <p class="h1 mb-5 mx-1 mx-md-4 mt-4">{{user.group}} group members:</p>
-            <table class="table align-middle mb-0 bg-white">
-                <thead>
-                    <tr>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Last Online</th>
-                    {% if owner %}
-                    <th></th>
-                    {% endif %}
-                    </tr>
-                </thead>
-                    <tbody>        
-                        {% for user in group %}
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="ms-3">
-                                                <p class="fw-bold mb-1">{{ user.username }}</p>
+            <div class="row mb-3">
+                <p class="h1 mb-5 mx-1 mx-md-4 mt-4">{{user.group}} group members:</p>
+                <table class="table align-middle mb-0 bg-white">
+                    <thead>
+                        <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Last Online</th>
+                        {% if owner %}
+                        <th></th>
+                        {% endif %}
+                        </tr>
+                    </thead>
+                        <tbody>        
+                            {% for user in group %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-3">
+                                                    <p class="fw-bold mb-1">{{ user.username }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="ms-3">
-                                                <p class="fw-bold mb-1">{{ user.role }}</p>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-3">
+                                                    <p class="fw-bold mb-1">{{ user.role }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="ms-3">
-                                        <p class="fw-bold mb-1">{{ user.timeStamp }}</p>
-                                    </div>
-                                </td>    
-                                <td>                         
-                                    {% if owner and user.role != 'Owner' %}
-                                        <form action="/cma/manage/remove">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="user_email" value="{{user.email}}">  
-                                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                                        </form>
-                                    {% endif %}   
-                                </td>                           
-                            </tr>  
-                        {% endfor %}
-                    </tbody>      
-            </table>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                    </td>
+                                    <td>
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1">{{ user.timeStamp }}</p>
+                                        </div>
+                                    </td>    
+                                    <td>                         
+                                        {% if owner and user.role != 'Owner' %}
+                                            <form action="/cma/manage/remove">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="user_email" value="{{user.email}}">  
+                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                            </form>
+                                        {% endif %}   
+                                    </td>                           
+                                </tr>  
+                            {% endfor %}
+                        </tbody>      
+                </table>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        {% if owner %}
+                        <form action="/cma/manage/add">
+                            {% csrf_token %}
+                            <label for="textfield">Email:</label>
+                            <input type="email" id="user_email" name="user_email">  
+                            <button type="submit">Add To Group</button>
+                        </form>
+                        {% endif %}  
+                    </div>
+                </div>
+                <div class="col-md-2">
                     {% if owner %}
-                    <form action="/cma/manage/add">
-                        {% csrf_token %}
-                        <label for="textfield">Email:</label>
-                        <input type="email" id="user_email" name="user_email">  
-                        <button type="submit">Add To Group</button>
-                    </form>
-                    {% endif %}  
+                        <form action="/cma/manage/delete">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete group</button>
+                        </form>
+                    {% else %}
+                        <form action="/cma/manage/leave">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Leave group</button>
+                        </form>
+                    {% endif %} 
                 </div>
             </div>
-            <div class="col-md-2">
-                {% if owner %}
-                    <form action="/cma/manage/delete">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm">Delete group</button>
-                    </form>
-                {% else %}
-                    <form action="/cma/manage/leave">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm">Leave group</button>
-                    </form>
-                {% endif %} 
+        {% elif role%}
+            <div class="row mb-3">
+                <p class="h1 mb-5 mx-1 mx-md-4 mt-4">You have been invited to the "{{ role }}" group.</p>
+                <form method="post" action="/cma/manage/">
+                    {% csrf_token %}
+                    <button type="submit" name="role_response" value="accept" class="btn btn-success btn-sm">Accept</button>
+                    <button type="submit" name="role_response" value="decline" class="btn btn-danger btn-sm">Decline</button>
+                </form>
             </div>
-        </div>
         {% else %}
-        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-            <form action="/cma/manage/new">
-                {% csrf_token %}
-                <label for="textfield">Group name:</label>
-                <input type="text" id="group_name" name="group_name">  
-                <button type="submit">Create group</button>
-            </form>
-        </div>
+            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                <form action="/cma/manage/new">
+                    {% csrf_token %}
+                    <label for="textfield">Group name:</label>
+                    <input type="text" id="group_name" name="group_name">  
+                    <button type="submit">Create group</button>
+                </form>
+            </div>
         {% endif %}
     </ul>
 </div>

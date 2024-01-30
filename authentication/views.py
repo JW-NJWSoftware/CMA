@@ -19,7 +19,7 @@ def login_view(request):
             return redirect(next_url)
         else:
             # Add an error message if authentication fails
-            messages.error(request, 'Invalid username or password')
+            messages.warning(request, 'Invalid username or password')
     else:
         form = AuthenticateForm(request)
     context = {"form":form}
@@ -40,9 +40,9 @@ def register_view(request):
                 messages.success(request, 'Account created successfully')
                 return redirect('/auth/login')
             else:
-                messages.error(request, 'Please agree to the Terms of Service.')
+                messages.warning(request, 'Please agree to the Terms of Service.')
         else:
-            messages.error(request, 'Invalid registration details')
+            messages.warning(request, 'Invalid registration details')
     else:
         form = UserCreateForm()
     context = {"form": form}
@@ -58,7 +58,7 @@ def profile_view(request):
                 messages.success(request, 'Your account was successfully updated!')
                 return redirect('/auth/profile')
             else:
-                messages.error(request, 'Update failed')
+                messages.warning(request, 'Update failed')
                 return redirect('/auth/profile')
         elif "change_password" in request.POST:
             password_form = CustomPasswordChangeForm(user, request.POST)
@@ -90,7 +90,7 @@ def settings_view(request):
             messages.success(request, 'Your settings were successfully updated!')
             return redirect('/auth/settings')
         else:
-            messages.error(request, 'Update failed')
+            messages.warning(request, 'Update failed')
             return redirect('/auth/settings')
     else:
         initial_data = {

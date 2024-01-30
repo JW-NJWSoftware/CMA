@@ -31,7 +31,7 @@ def search(request):
         file_names_list = [CMDoc.file.name.split('/')[-1] for CMDoc in files]
     
     else:
-        messages.error(request, 'No search value provided.')
+        messages.warning(request, 'No search value provided.')
 
     return render(request, "search.html", {'files': files, 'chats': chats, 'names': file_names_list, 'search': search})
 
