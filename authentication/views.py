@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from authentication.forms import UserCreateForm, AuthenticateForm, ProfileForm, CustomPasswordChangeForm, SettingsForm
@@ -25,6 +26,7 @@ def login_view(request):
     context = {"form":form}
     return render(request, "auth/login.html", context)
 
+@login_required
 def logout_view(request):
     if request.method == "POST":
         logout(request)
@@ -48,6 +50,7 @@ def register_view(request):
     context = {"form": form}
     return render(request, "auth/register.html", context)
 
+@login_required
 def profile_view(request):
     user = request.user
     if request.method == "POST":
@@ -67,7 +70,9 @@ def profile_view(request):
                 update_session_auth_hash(request, user)
                 messages.success(request, 'Your password was successfully updated!')
                 return redirect('/auth/profile')
-
+        else:
+            messages.warning(request, 'Update failed')
+            return redirect('/auth/profile')
     else:
         profile_form = ProfileForm(instance=user)
         password_form = CustomPasswordChangeForm(user)
@@ -75,6 +80,7 @@ def profile_view(request):
     context = {"profile_form": profile_form, "user": request.user, 'password_form': password_form}
     return render(request, "auth/profile.html", context)
 
+@login_required
 def settings_view(request):
     user = request.user
     if request.method == "POST":
