@@ -38,21 +38,18 @@ def manage(request):
                 user.role = 'Member'
                 user.save()
                 messages.success(request, f'You have accepted the invitation to the "{role}" group.')
-                return redirect('manage')
             else:
                 messages.warning(request, "Sorry, an issue has occured. Please try again.")
-                return redirect('manage')
         elif role_response == 'decline':
             user.role = None
             user.save()
             messages.warning(request, f'You have declined the invitation to the "{role}" group.')
-            return redirect('manage')
-    else:
-        if group:
-            users = CustomUser.objects.filter(group=group)
 
-            if request.user.role == 'Owner':
-                owner = True
+    if group:
+        users = CustomUser.objects.filter(group=group)
+
+        if request.user.role == 'Owner':
+            owner = True
 
     return render(request, 'cma/manage.html', {'role': role, 'group': users, 'owner': owner, 'mainUser':request.user})
 
@@ -60,20 +57,23 @@ def manage(request):
 def add_to_group(request):
     userEmail = request.GET.get('user_email') or None
 
-    if userEmail:
-        user = get_object_or_404(CustomUser, email=userEmail)
-        
-        if user.group is None:
-            if user.role is None:
-                user.role = request.user.group
-                user.save()
-                messages.success(request, 'User invited to group')
+    if request.user.role == 'Owner':
+        if userEmail:
+            user = get_object_or_404(CustomUser, email=userEmail)
+            
+            if user.group is None:
+                if user.role is None:
+                    user.role = request.user.group
+                    user.save()
+                    messages.success(request, 'User invited to group')
+                else:
+                    messages.warning(request, 'User is already invited to a group')
             else:
-                messages.warning(request, 'User is already invited to a group')
+                messages.warning(request, 'User is already in a group')
         else:
-            messages.warning(request, 'User is already in a group')
+            messages.warning(request, 'User not found')
     else:
-        messages.warning(request, 'User not found')
+        raise PermissionDenied
 
     return redirect('manage')
 
