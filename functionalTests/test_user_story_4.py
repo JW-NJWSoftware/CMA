@@ -26,13 +26,6 @@ import time
 from time import sleep
 
 class FileManagement(FunctionalTest):
-    def setUp(self):
-        # Assuming you have initialized your webdriver
-        self.browser = webdriver.Chrome()
-        self.browser.maximize_window()
-
-    def tearDown(self):
-        self.browser.quit()
 
     def test_can_view_files(self):
         # Register user

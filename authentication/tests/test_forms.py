@@ -218,12 +218,14 @@ class UserFormsTest(TestCase):
 
     def test_settings_form_valid(self):
         form_data = {
+            'font_size':8,
             'chunk_size': 10,
             'sentence_cut_percentage': 0.5,
             'modelChoice': 'roberta-base-squad2',
         }
         form = SettingsForm(data=form_data)
         self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['font_size'], 8)
         self.assertEqual(form.cleaned_data['chunk_size'], 10)
         self.assertEqual(form.cleaned_data['sentence_cut_percentage'], 0.5)
         self.assertEqual(form.cleaned_data['modelChoice'], 'roberta-base-squad2')
@@ -231,6 +233,7 @@ class UserFormsTest(TestCase):
     def test_settings_form_invalid(self):
         # Test with invalid data, expect form not to be valid
         form_data = {
+            'font_size':'not_an_integer',
             'chunk_size': 'not_an_integer',
             'sentence_cut_percentage': 'not_a_float',
             'modelChoice': 'invalid_choice',

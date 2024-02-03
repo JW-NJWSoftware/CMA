@@ -21,13 +21,6 @@ import time
 from time import sleep
 
 class FileManagement(FunctionalTest):
-    def setUp(self):
-        # Assuming you have initialized your webdriver
-        self.browser = webdriver.Chrome()
-        self.browser.maximize_window()
-
-    def tearDown(self):
-        self.browser.quit()
 
     def test_can_view_files(self):
         # Register user
@@ -49,6 +42,10 @@ class FileManagement(FunctionalTest):
         self.browser.find_element(By.ID, "id_password").send_keys("TestPassword123!")
 
         self.browser.find_element(By.NAME, "submit").click()
+
+        self.browser.get(self.live_server_url + "/CMA")
+        textBox = self.browser.find_element(By.ID, "noFilesText")
+        self.assertIn("No files have been uploaded.", textBox.text)
 
         self.browser.get(self.live_server_url + "/CMA/upload_file")
         self.browser.find_element(By.ID, "id_fileName").send_keys("testFile - testDoc")

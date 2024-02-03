@@ -60,7 +60,7 @@
             });
         </script>
         {% else %}
-        <p class="text-center fw-normal  mb-5 mx-1 mx-md-4 mt-4">No chats have been created.</p>
+        <p id="noChatsText" class="text-center fw-normal  mb-5 mx-1 mx-md-4 mt-4">No chats have been created.</p>
         {% endif %}
     </ul>
     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -68,7 +68,7 @@
             {% csrf_token %}
             <label for="textfield">Chat name:</label>
             <input type="text" id="chat_name" name="chat_name">  
-            <button type="submit">Create chat</button>
+            <button id="createChatSubmit" type="submit">Create chat</button>
         </form>
     </div>
 </div>
