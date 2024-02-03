@@ -10,7 +10,7 @@
             {% csrf_token %}
             <p class="text-center text-muted mt-5 mb-3">Are you sure you want to logout?</p>
             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                <button type="submit" class="btn btn-primary btn-lg">Logout</button>
+                <button type="submit" name="submit" class="btn btn-primary btn-lg">Logout</button>
             </div>
         </form>
     {% else %}

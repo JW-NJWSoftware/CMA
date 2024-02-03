@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col">                           
                         <p class="lead">File Description:</p>
-                        <p>{{CMDoc.desc}}</p>                       
+                        <p name="fileDesc">{{CMDoc.desc}}</p>                       
                     </div>
                 </div> 
                 {% if allow_extracted_data %}
@@ -77,7 +77,7 @@
 
     <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-1 mt-sm-2 mt-lg-4">
         <form action="{{ CMDoc.get_download_url }}">
-            <input type="submit" class="btn btn-primary btn-lg" value="Download File" />
+            <input type="submit" id="submitDownload" class="btn btn-primary btn-lg" value="Download File" />
         </form>
     </div>
 </div>

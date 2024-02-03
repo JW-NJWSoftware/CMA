@@ -25,12 +25,12 @@
                 </div>
             {% endfor %}
             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                <button type="submit" name="submit" class="btn btn-primary btn-lg">Login</button>
             </div>
         </form>
         <p class="text-center text-muted mt-5 mb-0">Don't have an account? 
             <a href="/auth/register/" class="fw-bold text-body">
-                <u>Register here</u>
+                <u id="registerLink">Register here</u>
             </a>
         </p>
     {% endif %}

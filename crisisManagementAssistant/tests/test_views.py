@@ -5,7 +5,6 @@ from crisisManagementAssistant.models import CMDoc, Chat
 from django.contrib.auth import get_user_model, login
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-
 class ManageViewsTest(TestCase):
     def setUp(self):
         # Set up a client for making requests
