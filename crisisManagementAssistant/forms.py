@@ -25,3 +25,6 @@ class CMDocForm(forms.ModelForm):
         # Set 'required' attribute for fileName and file fields
         self.fields['fileName'].required = True
         self.fields['file'].required = True
+
+class EditSummaryForm(forms.Form):
+    summary_text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '5'}))

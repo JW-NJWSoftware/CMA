@@ -8,7 +8,7 @@ from authentication.models import CustomUser
 
 from django.core.exceptions import PermissionDenied
 
-from crisisManagementAssistant.forms import CMDocForm
+from crisisManagementAssistant.forms import CMDocForm, EditSummaryForm
 
 from django.contrib.auth.decorators import login_required
 
@@ -229,9 +229,23 @@ def view_file(request, slug=None):
         if file_obj.user != request.user and file_obj.user.group != request.user.group:
             raise PermissionDenied
 
+        if request.method == 'POST':
+            form = EditSummaryForm(request.POST)
+            if form.is_valid():
+                summary_text = form.cleaned_data['summary_text']
+                # Update extractedData field with the new summary text
+                file_obj.extractData['summary'] = summary_text
+                file_obj.save()
+                return redirect('view_file', slug=slug)
+            else:
+                messages.warning(request, 'An error has occured. Please try again.')
+                return redirect('view_file', slug=slug)
+
         data = file_obj.extractData
         summary = data.get('summary')
         names = data.get('names')
+
+        form = EditSummaryForm(initial={'summary_text': summary})
 
         if names:
             names_list = names.split(', ')
@@ -247,7 +261,7 @@ def view_file(request, slug=None):
         allow_view = file_extension in allowed_view_file_types
         allow_extracted_data = file_extension in allowed_extracted_file_types
 
-    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary), 'names_list': names_list, 'allow_view': allow_view, 'allow_extracted_data': allow_extracted_data})
+    return render(request, 'cma/view_CMDoc.html', {'CMDoc': file_obj, 'summary': str(summary), 'names_list': names_list, 'allow_view': allow_view, 'allow_extracted_data': allow_extracted_data, 'form': form})
 
 
 @login_required

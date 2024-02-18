@@ -32,10 +32,16 @@
                     </div>
                 </div> 
                 {% if allow_extracted_data %}
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col">
                             <p class="lead">Generated Summary:</p>
-                            <p id="fileSummary">{{ summary }}</p>                           
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ form.summary_text }}
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Summary</button>
+                            </form>
                         </div>
                     </div>
                     <div class="row">

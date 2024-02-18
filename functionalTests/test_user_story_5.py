@@ -3,6 +3,7 @@
 # This user will:
 # Upload a file
 # Receive a breakdown of the file from the application outlining critical information
+# Make relevant changes based on how accurate the user feels the response information is in comparison to the provided document
 
 # Possible challenges:
 # The processing of the initial file uploads is critical to the success of the application as this information must be able to quickly and confidently support a user's crisis management practices.
