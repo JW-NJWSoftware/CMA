@@ -56,3 +56,6 @@ class Chat(models.Model):
     def get_regen_context_url(self):
         return reverse("regen_context_chat", kwargs={"slug": self.slug})
 
+    def get_clear_history_url(self):
+        return reverse("clear_history_chat", kwargs={"slug": self.slug})
+

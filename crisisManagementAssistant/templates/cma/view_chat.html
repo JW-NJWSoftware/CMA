@@ -91,7 +91,13 @@
                 <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-1 mt-sm-2 mt-lg-4">
                     <input type="submit" class="btn btn-primary btn-lg" value="Regenerate context" />
                 </div>   
-            </form>      
+            </form>
+            <form action="{{ chat.get_clear_history_url }}" method="post">
+                {% csrf_token %}  
+                <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-1 mt-sm-2 mt-lg-4">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Clear history" />
+                </div>   
+            </form>            
         </div>
       </div>
 </div>

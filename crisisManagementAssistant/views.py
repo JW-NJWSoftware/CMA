@@ -471,6 +471,26 @@ def regen_context_chat(request, slug=None):
     return redirect('view_chat', slug=slug)
 
 @login_required
+def clear_history_chat(request, slug=None):
+
+    chat_obj = get_object_or_404(Chat, slug=slug)
+
+    if chat_obj.user != request.user and chat_obj.user.group != request.user.group:
+        raise PermissionDenied
+        
+    if request.method == 'POST':
+        chatData = {
+            "history": "",
+            "context": chat_obj.chatData.get('context'),
+            "file_ids": chat_obj.chatData.get('file_ids'),
+        }
+
+        chat_obj.chatData = chatData
+        chat_obj.save()
+
+    return redirect('view_chat', slug=slug)
+
+@login_required
 def new_chat(request):
     chat_name = request.GET.get('chat_name') or None
 

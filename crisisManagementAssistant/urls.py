@@ -36,6 +36,8 @@ urlpatterns = [
     path('chat/delete/<slug:slug>/', CMA_views.delete_chat, name='delete_chat'),
 
     path('chat/regencontext/<slug:slug>/', CMA_views.regen_context_chat, name='regen_context_chat'),
+    
+    path('chat/clearhistory/<slug:slug>/', CMA_views.clear_history_chat, name='clear_history_chat'),
 ]
 
 
