@@ -69,4 +69,7 @@ class FileSummary(FunctionalTest):
         fileSummary = self.browser.find_element(By.ID, "fileSummary")
         self.assertIsNotNone(fileSummary.text)
 
+        fileNER = self.browser.find_element(By.XPATH, "//div[@class='row']/div/p[@class='lead' and text()='Key People:']")
+        self.assertIsNotNone(fileNER)
+
 
